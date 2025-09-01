@@ -1,0 +1,259 @@
+1) Створіть додаток
+python manage.py startapp landing
+
+
+Додайте 'landing' у INSTALLED_APPS вашого settings.py.
+
+2) URLs (підключення додатку)
+project/urls.py (головний urls)
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('landing.urls')),  # головний маршрут віддаємо лендингу
+]
+
+landing/urls.py
+from django.urls import path
+from . import views
+
+app_name = 'landing'
+
+urlpatterns = [
+    path('', views.index, name='index'),           # Сторінка №1 з кнопкою
+    path('demo/', views.demo_form, name='demo'),   # Сторінка №2 з формою
+]
+
+3) Views (логіка)
+landing/views.py
+from django.shortcuts import render, redirect
+from django.core.mail import send_mail, EmailMessage
+from django.contrib import messages
+from django.conf import settings
+from .forms import DemoRequestForm
+
+# Статична сторінка №1 — лише кнопка
+def index(request):
+    return render(request, 'landing/index.html')
+
+# Сторінка №2 — форма + відправка email на 2 адреси
+def demo_form(request):
+    if request.method == 'POST':
+        form = DemoRequestForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            phone = form.cleaned_data['phone']
+            email = form.cleaned_data['email']
+
+            # >>> ВКАЖІТЬ СВОЇ АДРЕСИ ОТРИМУВАЧІВ <<<
+            recipients = ["first@example.com", "second@example.com"]
+
+            subject = "Запит на демонстрацію з лендингу"
+            body = (
+                f"Ім'я: {name}\n"
+                f"Телефон: {phone}\n"
+                f"E-mail: {email}\n"
+            )
+
+            # Варіант 1: простий send_mail
+            send_mail(
+                subject,
+                body,
+                settings.DEFAULT_FROM_EMAIL,  # від кого
+                recipients,
+                fail_silently=False
+            )
+
+            # Або Варіант 2 (коментуйте/розкоментовуйте за потреби):
+            # msg = EmailMessage(subject, body, settings.DEFAULT_FROM_EMAIL, recipients)
+            # msg.reply_to = [email] if email else []
+            # msg.send(fail_silently=False)
+
+            messages.success(request, "Дякуємо! Заявку надіслано.")
+            return redirect('landing:demo')  # повернемось на форму з повідомленням
+    else:
+        form = DemoRequestForm()
+
+    return render(request, 'landing/demo_form.html', {'form': form})
+
+4) Форма (валідація)
+landing/forms.py
+from django import forms
+
+class DemoRequestForm(forms.Form):
+    name = forms.CharField(
+        label="Ім'я",
+        max_length=100,
+        widget=forms.TextInput(attrs={"placeholder": "Ваше ім'я", "class": "input"})
+    )
+    phone = forms.CharField(
+        label="Телефон",
+        max_length=30,
+        widget=forms.TextInput(attrs={"placeholder": "+49 123 4567", "class": "input"})
+    )
+    email = forms.EmailField(
+        label="Електронна пошта",
+        widget=forms.EmailInput(attrs={"placeholder": "you@example.com", "class": "input"})
+    )
+
+5) Шаблони
+
+Створіть папку landing/templates/landing/.
+
+landing/templates/landing/base.html
+
+(база стилів, кнопок і контейнерів; дуже легкий, без зовнішніх бібліотек)
+
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>W.A. AI™</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --text: #e8eaee;
+      --muted: #aab2bd;
+      --accent: #d6b154; /* Золото */
+      --accent-hover: #e5c768;
+      --card: #121821;
+      --ring: rgba(214,177,84,.35);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: radial-gradient(1000px 600px at 50% -200px, #16202b 10%, var(--bg) 60%);
+      color: var(--text); font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+      min-height: 100vh; display:flex; flex-direction:column;
+    }
+    .container { max-width: 1100px; margin: 0 auto; padding: 24px; width: 100%; }
+    .center { display:flex; align-items:center; justify-content:center; }
+    .hero { text-align:center; padding: 10vh 0 8vh; }
+    h1 { margin:0 0 12px; font-size: clamp(28px, 5vw, 54px); letter-spacing: 0.3px; }
+    .sub { color: var(--muted); font-size: clamp(14px, 2.4vw, 18px); line-height: 1.5; max-width: 900px; margin: 0 auto 28px; }
+    .btn {
+      display:inline-block; padding: 14px 24px; font-size: 18px; border-radius: 999px; text-decoration:none; color:#111;
+      background: linear-gradient(180deg, var(--accent), #c9a13f);
+      box-shadow: 0 8px 24px var(--ring);
+      transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+      user-select: none;
+    }
+    .btn:hover { transform: translateY(-1px); filter: brightness(1.03); box-shadow: 0 10px 30px var(--ring); }
+    .card {
+      background: var(--card); border: 1px solid rgba(255,255,255,.06);
+      border-radius: 16px; padding: 20px;
+    }
+    .form {
+      max-width: 560px; margin: 24px auto; padding: 24px;
+      background: var(--card); border: 1px solid rgba(255,255,255,.06); border-radius: 16px;
+    }
+    label { display:block; font-size: 14px; color: var(--muted); margin: 10px 0 6px; }
+    .input {
+      width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,.08);
+      background: #0f141c; color: var(--text); outline: none;
+    }
+    .input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px var(--ring); }
+    .footer {
+      margin-top: auto; color: #cbd3de; opacity: .6; font-size: 14px; padding: 24px 0;
+    }
+    .alert { margin: 0 auto 16px; max-width: 560px; background: #10331b; border: 1px solid #2d6a3b; color: #b9f6c9; padding: 12px 14px; border-radius: 12px; }
+  </style>
+  {% load static %}
+</head>
+<body>
+  <div class="container">
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+    {% block content %}{% endblock %}
+    <div class="footer center">2025 ARCOSS AIRNE. All rights reserved • Privacy Policy</div>
+  </div>
+</body>
+</html>
+
+landing/templates/landing/index.html (Сторінка №1 — лише одна клікабельна кнопка)
+{% extends "landing/base.html" %}
+{% block content %}
+  <section class="hero">
+    <h1>Оцените возможности W.A. AI™</h1>
+    <p class="sub">
+      Персонализированный цифровой помощник с интеллектуальным анализом данных.<br>
+      Анализ • Визуализация • Прогнозирование — на базе W.A. AI™
+    </p>
+    <div class="center" style="margin-top:26px;">
+      <a href="{% url 'landing:demo' %}" class="btn">Запустить демонстрацию</a>
+    </div>
+  </section>
+{% endblock %}
+
+landing/templates/landing/demo_form.html (Сторінка №2 — форма)
+{% extends "landing/base.html" %}
+{% block content %}
+  <section class="hero" style="padding-top: 6vh;">
+    <h1>Запит на демонстрацію</h1>
+    <p class="sub">Заповніть, будь ласка, контактні дані — ми надішлемо матеріали на вказану пошту.</p>
+
+    <form class="form" method="post" novalidate>
+      {% csrf_token %}
+      <div>
+        <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+        {{ form.name }}
+        {% for e in form.name.errors %}<div style="color:#ffb3b3;font-size:13px;">{{ e }}</div>{% endfor %}
+      </div>
+      <div>
+        <label for="{{ form.phone.id_for_label }}">{{ form.phone.label }}</label>
+        {{ form.phone }}
+        {% for e in form.phone.errors %}<div style="color:#ffb3b3;font-size:13px;">{{ e }}</div>{% endfor %}
+      </div>
+      <div>
+        <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+        {{ form.email }}
+        {% for e in form.email.errors %}<div style="color:#ffb3b3;font-size:13px;">{{ e }}</div>{% endfor %}
+      </div>
+
+      <div class="center" style="margin-top:18px;">
+        <button type="submit" class="btn">Надіслати</button>
+      </div>
+    </form>
+  </section>
+{% endblock %}
+
+6) Налаштування email
+
+У settings.py (поставте реальні SMTP значення). Для швидкої перевірки локально можна використовувати console backend (пошта друкується в консолі), а далі — бойовий SMTP.
+
+Варіант A: консольний (для тесту)
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+DEFAULT_FROM_EMAIL = "no-reply@example.com"
+
+Варіант B: реальний SMTP (наприклад, Gmail або ваш SMTP)
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "your_account@gmail.com"
+EMAIL_HOST_PASSWORD = "your_app_password"  # саме app password
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+7) Запуск
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
+
+
+Сторінка №1: http://127.0.0.1:8000/ — кнопка «Запустить демонстрацию» (єдина клікабельна).
+
+Сторінка №2: http://127.0.0.1:8000/demo/ — форма з полями Ім’я / Телефон / Електронна пошта.
+
+Після відправки — лист іде на дві адреси, а сторінка показує зелене повідомлення «Дякуємо! Заявку надіслано.»
+
+8) Що залишилось від вас
+
+Напишіть дві цільові адреси в recipients = ["first@example.com", "second@example.com"].
+
+Скажіть, якщо потрібно більш точне відтворення візуалу з PDF (шрифт/розмітка/фон). Я швидко підтягну стилі під макет.
+
+Якщо хочете такий самий варіант на Flask (один файл), теж дам готовий шаблон.
