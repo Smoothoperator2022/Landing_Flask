@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+  <section class="hero">
+    <div class="hero-frame">
+      <img src="{{ url_for('static', filename='hero_full.png') }}" alt="W.A. AI" class="hero-img">
+
+<!--      &lt;!&ndash; форма з CSRF (Flask-WTF) → POST /go &ndash;&gt;-->
+<!--      <form class="cta-spot" method="post" action="{{ url_for('go') }}">-->
+<!--        {{ csrf_token() }}-->
+<!--        <button type="submit" class="btn">Запустити демонстрацію</button>-->
+<!--      </form>-->
+
+      <form class="cta-spot" method="post" action="{{ url_for('go') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit" class="btn">Запустити демонстрацію</button>
+      </form>
+            <!-- Приклад другої/третьої кнопок у різних місцях -->
+      <form class="cta-spot cta-spot2" method="post" action="{{ url_for('go') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit" class="btn">
+
+        </button>
+      </form>
+
+      <form class="cta-spot cta-spot3" method="post" action="{{ url_for('go') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit" class="btn">Приєднатись</button>
+      </form>
+
+    </div>
+  </section>
+{% endblock %}
+
+

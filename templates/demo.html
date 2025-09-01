@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+  <section class="hero" style="padding-top: 6vh;">
+    <h1>Запит на демонстрацію</h1>
+    <p class="sub">Заповніть контактні дані — матеріали надішлемо на вказану пошту.</p>
+
+    <form class="form" method="post" novalidate>
+      {{ form.hidden_tag() }}
+      <div>
+        <label for="{{ form.name.id }}">Ім'я</label>
+        {{ form.name(class="input", placeholder="Ваше ім'я") }}
+        {% for e in form.name.errors %}<div style="color:#ffb3b3;font-size:13px;">{{ e }}</div>{% endfor %}
+      </div>
+
+      <div>
+        <label for="{{ form.phone.id }}">Телефон</label>
+        {{ form.phone(class="input", placeholder="+49 123 4567") }}
+        {% for e in form.phone.errors %}<div style="color:#ffb3b3;font-size:13px;">{{ e }}</div>{% endfor %}
+      </div>
+
+      <div>
+        <label for="{{ form.email.id }}">Електронна пошта</label>
+        {{ form.email(class="input", placeholder="you@example.com") }}
+        {% for e in form.email.errors %}<div style="color:#ffb3b3;font-size:13px;">{{ e }}</div>{% endfor %}
+      </div>
+
+      <div class="center" style="margin-top:18px;">
+        {{ form.submit(class="btn") }}
+      </div>
+    </form>
+  </section>
+{% endblock %}

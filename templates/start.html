@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+  <meta name="robots" content="noindex,nofollow">
+  <section class="hero">
+    <div class="form">
+      <h1>Сторінка B (/start)</h1>
+      <p>Доступ тільки після натискання кнопки на головній.</p>
+      <p><a href="{{ url_for('demo') }}" class="btn">Перейти до форми</a></p>
+    </div>
+  </section>
+{% endblock %}
