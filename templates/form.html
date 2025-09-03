@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+    <meta charset="UTF-8">
+    <title>Форма заявки</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        .form-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 12px;
+            width: 350px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #000;
+        }
+        .form-container label {
+            display: block;
+            margin: 10px 0 5px;
+            color: #000;
+            font-size: 14px;
+        }
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        .form-container button {
+            width: 100%;
+            padding: 12px;
+            background: #00cc44;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background: #009933;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        .back-link a {
+            text-decoration: none;
+            color: #00cc44;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Форма заявки</h2>
+        <form action="/submit" method="post">
+            <label>Ім'я</label>
+            <input type="text" name="name" required>
+
+            <label>Телефон</label>
+            <input type="text" name="phone" required>
+
+            <label>Email</label>
+            <input type="email" name="email" required>
+
+            <button type="submit">Надіслати</button>
+        </form>
+        <div class="back-link">
+            <a href="/?lang={{ lang }}">⬅ Назад</a>
+        </div>
+    </div>
+</body>
+</html>

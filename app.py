@@ -1,184 +1,70 @@
-import os
-from flask import Flask, render_template, redirect, url_for, flash, request
-from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired, Email, Length
-from flask_mail import Mail, Message
-from dotenv import load_dotenv
-
-import time
-import uuid
-from urllib.parse import urlparse
-from itsdangerous import URLSafeTimedSerializer, BadSignature, SignatureExpired
-from flask_wtf.csrf import CSRFProtect
-from flask import (
-    Flask, render_template, redirect, url_for, flash, request,
-    session, make_response, abort
-)
-
-# Завантажимо .env якщо є
-load_dotenv()
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
-# Базові налаштування
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-secret-change-me')
+# 🔑 Словник перекладів
+translations = {
+    "ru": {
+        "title": "Финансово-аналитическая модель W.A. AI™",
+        "subtitle": "Инструменты для анализа данных и стабильных решений",
+        "intro": "Если вы выбрали нас, значит, вы ищете пассивный доход. Наша команда сотрудничает с разработчиками финансово-аналитической модели W.A. AI™, которая обеспечивает прозрачность и стабильность процессов. Вы можете проверить её работу в удобном режиме и оценить результат лично. При необходимости поддержку на каждом этапе готовы оказать консультанты.",
+        "button1": "Запустить демонстрацию",
+        "button2": "Запустить демонстрацию",
+        "button3": "Запустить демонстрацию",
+        "card1_title": "Моделирование данных",
+        "card2_title": "Сценарная визуализация",
+        "card3_title": "Гипотетическая модель",
+        "section1_caption": "Мы используем AI для максимизации данных",
+        "section2": "Инструмент интеллектуальной автоматизации действий с данными. Анализ. Визуализация. Прогнозирование на базе W.A. AI™",
+        "section3": "Интегрировано в корпоративные процессы более 1500 команд. Это подтверждает ее надежность и технологическую устойчивость. Использование проверенных решений способствует стабильности и масштабируемости платформы.",
+        "section4": "Наша платформа используется в цифровых процессах более 1500 команд. Это подтверждает ее надежность и технологическую устойчивость. Использование проверенных решений способствует стабильности и масштабируемости платформы.",
+        "section5": "Система Scout™ для анализа сценариев. Вы можете в режиме реального времени отслеживать ключевые процессы и данные с помощью системы Scout™, которая обеспечивает высокую точность, надежность и прозрачность каждого этапа.",
+        "analysis_title": "Аналитический вывод"
+    },
+    "en": {
+        "title": "Financial-analytical model W.A. AI™",
+        "subtitle": "Tools for data analysis and stable decisions",
+        "intro": "By choosing us, you are looking for passive income. Our team works with developers of the financial-analytical model W.A. AI™, which ensures transparency and stability of processes. You can test its work in a convenient mode and evaluate the result personally. If necessary, support is provided at every stage.",
+        "button1": "Start Demo",
+        "button2": "Start Demo",
+        "button3": "Start Demo",
+        "card1_title": "Data Modeling",
+        "card2_title": "Scenario Visualization",
+        "card3_title": "Hypothetical Model",
+        "section1_caption": "We use AI to maximize data",
+        "section2": "A tool for intelligent automation of data operations. Analysis. Visualization. Forecasting based on W.A. AI™",
+        "section3": "Integrated into corporate processes of more than 1500 teams. This confirms its reliability and technological sustainability. The use of proven solutions contributes to stability and scalability of the platform.",
+        "section4": "Our platform is used in digital processes of more than 1500 teams. This confirms its reliability and technological sustainability. The use of proven solutions contributes to stability and scalability of the platform.",
+        "section5": "Scout™ system for scenario analysis. You can track key processes and data in real time using Scout™, which provides high accuracy, reliability, and transparency at every stage.",
+        "analysis_title": "Analytical Report"
+    }
+}
 
-# Налаштування пошти
-app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER', 'localhost')
-app.config['MAIL_PORT'] = int(os.getenv('MAIL_PORT', '1025'))
-app.config['MAIL_USE_TLS'] = bool(int(os.getenv('MAIL_USE_TLS', '0')))
-app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME', '')
-app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD', '')
-app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_DEFAULT_SENDER', 'no-reply@example.com')
-
-# Одержувачі (дві адреси через кому в .env)
-recipients_env = os.getenv('RECIPIENTS', '')
-RECIPIENTS = [addr.strip() for addr in recipients_env.split(',') if addr.strip()]
-
-mail = Mail(app)
-
-# --- Форма ---
-class DemoForm(FlaskForm):
-    name = StringField("Ім'я", validators=[
-        DataRequired(message="Вкажіть ім'я"),
-        Length(max=100)
-    ])
-    phone = StringField("Телефон", validators=[
-        DataRequired(message="Вкажіть телефон"),
-        Length(max=30)
-    ])
-    email = StringField("Електронна пошта", validators=[
-        DataRequired(message="Вкажіть email"),
-        Email(message="Невірний формат email"),
-        Length(max=254)
-    ])
-    submit = SubmitField("Надіслати")
-
-# --- Маршрути ---
-
-
-# Увімкнути CSRF глобально
-CSRFProtect(app)
-
-# Сигнер для коротких маркерів (підписаний токен у cookie — опціонально)
-signer = URLSafeTimedSerializer(app.config['SECRET_KEY'], salt="gate-token")
-
-# Хелпер: чи наш реферер з того самого домену
-def _same_origin(req: request) -> bool:
-    ref = req.referrer
-    if not ref:
-        return False
-    ref_host = urlparse(ref).netloc
-    return ref_host == req.host
-
-# Хелпер: простий фільтр підозрілих ботів (додатковий, не обов'язковий)
-BAD_BOTS = (
-    "adsbot-google", "googlebot", "mediapartners-google",
-    "facebookexternalhit", "facebot", "bingbot", "yandexbot",
-    "bot", "crawler", "spider", "preview", "linkchecker"
-)
-def _looks_like_bot(req: request) -> bool:
-    ua = (req.headers.get("User-Agent") or "").lower()
-    return any(k in ua for k in BAD_BOTS)
-
-# ---------- A: головна (кнопка без href) ----------
-@app.get("/")
+@app.route("/", methods=["GET", "POST"])
 def index():
-    # рендериш як і раніше (кнопка всередині <form method="POST" action="/go">)
-    return render_template("index.html")
+    lang = request.args.get("lang", "ru")  # за замовчуванням RU
+    t = translations.get(lang, translations["ru"])
 
-# ---------- GATE: приймає тільки POST ----------
-@app.post("/go")
-def go():
-    # 1) базові перевірки
-    if not _same_origin(request):
-        abort(400)  # чужий реферер — ні
-    if _looks_like_bot(request):
-        return ("", 204)  # для ботів — нічого (опційно)
+    if request.method == "POST":
+        return redirect(url_for("form_page", lang=lang))
 
-    # 2) короткоживучий маркер у сесії (одноразовий)
-    session["gate_ts"] = time.time()
-    session["gate_nonce"] = uuid.uuid4().hex  # щоб не повторювалися
-    session.modified = True
+    return render_template("index.html", t=t, lang=lang)
 
-    # 3) (опціонально) продублюємо маркером у cookie з підписом
-    token = signer.dumps({"n": session["gate_nonce"]})
-    resp = redirect(url_for("start"), code=303)  # 303 See Other → /start
-    resp.set_cookie(
-        "gate_token", token,
-        max_age=5 * 60, secure=False, httponly=True, samesite="Lax"
-    )
-    return resp
+@app.route("/form", methods=["GET", "POST"])
+def form_page():
+    lang = request.args.get("lang", "ru")
+    return render_template("form.html", lang=lang)
 
-# ---------- B: захищена сторінка ----------
-@app.get("/start")
-def start():
-    # 1) перевіряємо сесію
-    ts = session.pop("gate_ts", None)   # pop → одноразово
-    nonce = session.pop("gate_nonce", None)
-    if not ts or not nonce or (time.time() - ts) > 5 * 60:
-        # запізно або прямий перехід: назад на /demo (або на /)
-        return redirect(url_for("demo"))
+@app.route("/submit", methods=["POST"])
+def submit():
+    name = request.form.get("name")
+    phone = request.form.get("phone")
+    email = request.form.get("email")
 
-    # 2) (опціонально) звіряємо підписаний cookie
-    token = request.cookies.get("gate_token")
-    try:
-        data = signer.loads(token, max_age=5 * 60)
-        if data.get("n") != nonce:
-            return redirect(url_for("demo"))
-    except (BadSignature, SignatureExpired, TypeError):
-        return redirect(url_for("demo"))
+    # Поки що просто виведемо в консоль (потім збережемо у файл/БД)
+    print(f"Нова заявка: {name}, {phone}, {email}")
 
-    # 3) рендер сторінки B + noindex/nofollow + no-store
-    resp = make_response(render_template("start.html"))
-    resp.headers["Cache-Control"] = "no-store"
-    resp.headers["Pragma"] = "no-cache"
-    resp.headers["Expires"] = "0"
-    # Мету з noindex додамо прямо у шаблон (див. нижче)
-    return resp
-
-# ---------- demo як і був ----------
-# @app.route("/demo", methods=["GET", "POST"])
-# def demo(): ...
-
-
-@app.route("/demo", methods=["GET", "POST"])
-def demo():
-    form = DemoForm()
-    if form.validate_on_submit():
-        name = form.name.data.strip()
-        phone = form.phone.data.strip()
-        email = form.email.data.strip()
-
-        subject = "Запит на демонстрацію (лендинг)"
-        body = (
-            f"Ім'я: {name}\n"
-            f"Телефон: {phone}\n"
-            f"E-mail: {email}\n"
-            f"Джерело: {request.url_root}"
-        )
-
-        # Якщо RECIPIENTS не задані — зупиняємо з помилкою конфігурації
-        if not RECIPIENTS:
-            flash("Помилка конфігурації: не вказані адреси одержувачів (RECIPIENTS).", "error")
-            return redirect(url_for("demo"))
-
-        try:
-            msg = Message(subject=subject, body=body, recipients=RECIPIENTS, reply_to=email)
-            mail.send(msg)
-            flash("Дякуємо! Заявку надіслано.", "success")
-            return redirect(url_for("demo"))
-        except Exception as e:
-            # Лог і контрольоване повідомлення
-            app.logger.exception("Помилка відправки пошти")
-            flash(f"Помилка відправки пошти: {e}", "error")
-            return redirect(url_for("demo"))
-
-    return render_template("demo.html", form=form)
-
-
+    return "Дякуємо, ваша заявка отримана!"
 
 if __name__ == "__main__":
-    # Запуск: python app.py
-    app.run(host="0.0.0.0", port=5000, debug=bool(int(os.getenv('FLASK_DEBUG', '1'))))
+    app.run(debug=True)

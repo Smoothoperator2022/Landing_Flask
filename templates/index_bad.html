@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ t["title"] }}</title>
+    <body>
+        <div class="lang-switch">
+            <a href="/?lang=ru">RU</a> |
+            <a href="/?lang=en">EN</a>
+        </div>
+
+        <!-- Верхня зелена частина -->
+        <header>
+            <h1>{{ t["title"] }}</h1>
+            <p>{{ t["subtitle"] }}</p>
+        </header>
+
+        <div class="intro">
+            {{ t["intro"] }}
+        </div>
+
+        <div class="demo">
+            <form method="post">
+                <button type="submit">{{ t["button"] }}</button>
+            </form>
+        </div>
+
+        <!-- Хвиля-перехід -->
+        <div class="wave">
+            <svg viewBox="0 0 1440 160" xmlns="http://www.w3.org/2000/svg">
+                <path fill="#ffffff" fill-opacity="1"
+                      d="M0,80L48,74.6C96,69,192,59,288,45.3C384,32,480,21,576,26.6C672,32,768,48,864,74.6C960,101,1056,138,1152,130.6C1248,123,1344,69,1392,42.6L1440,16L1440,160L0,160Z">
+                </path>
+            </svg>
+        </div>
+
+        <!-- Нижня частина з другим фоном -->
+        <div class="lower-section">
+            <div class="section">
+                <img src="{{ url_for('static', filename='img/AI.jpg') }}" alt="AI Server">
+                <p>{{ t["section1"] }}</p>
+            </div>
+
+            <div class="section">
+                <img src="{{ url_for('static', filename='img/graph1.png') }}" alt="Chart">
+                <p>{{ t["section2"] }}</p>
+            </div>
+
+            <div class="section">
+                <img src="{{ url_for('static', filename='img/scout.png') }}" alt="Scout System">
+                <p>{{ t["section3"] }}</p>
+            </div>
+        </div>
+
+        <footer>
+            <p>W.A. AI™<br>2025 ARCOSS AIRNE. All rights reserved</p>
+            <a href="#">Privacy Policy</a>
+        </footer>
+    </body>
+
+    <style>
+         body {
+            margin: 0;
+            padding: 0;
+            font-family: "Times New Roman", serif;
+            color: #000;
+            background: url("{{ url_for('static', filename='img/Layer1.jpg') }}") no-repeat top center;
+            background-size: cover;
+        }
+
+        .lower-section {
+            background: url("{{ url_for('static', filename='img/Layer2.jpg') }}") no-repeat center center;
+            background-size: cover;
+            padding: 60px 20px;
+        }
+
+        .section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .section img {
+            max-width: 300px;
+            margin-right: 20px;
+        }
+
+    </style>
+
+
+
+    <!-- 🔽 а тут починається біла секція -->
+    <div class="lower-section">
+        <!-- Контент на білому фоні -->
+    </div>
+
+    <div class="section">
+        <img src="{{ url_for('static', filename='img/AI.jpg') }}" alt="AI Server">
+        <p>{{ t["section1"] }}</p>
+    </div>
+
+    <div class="section">
+        <img src="{{ url_for('static', filename='img/graph1.png') }}" alt="Chart">
+        <p>{{ t["section2"] }}</p>
+    </div>
+
+    <div class="section">
+        <img src="{{ url_for('static', filename='img/scout.png') }}" alt="Scout System">
+        <p>{{ t["section3"] }}</p>
+    </div>
+    <footer>
+        <p>W.A. AI™<br>2025 ARCOSS AIRNE. All rights reserved</p>
+        <a href="#">Privacy Policy</a>
+    </footer>
+</body>
+</html>
+
+
