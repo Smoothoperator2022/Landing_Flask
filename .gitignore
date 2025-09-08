@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+
+# Virtual environment
+.venv/
+env/
+venv/
+
+# VSCode / PyCharm
+.vscode/
+.idea/
+
+# Environment
+.env
+
+# test files
+mail_test.py
+run_debug_smtp.py
+
+# System
+.DS_Store
+Thumbs.db

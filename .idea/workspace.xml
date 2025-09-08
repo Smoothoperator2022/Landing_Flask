@@ -4,14 +4,49 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7c65b1bc-b48b-44a2-90a1-e6c05c2e9de7" name="Changes" comment="before en_ru trans">
-      <change afterPath="$PROJECT_DIR$/templates/form.html" afterDir="false" />
+    <list default="true" id="7c65b1bc-b48b-44a2-90a1-e6c05c2e9de7" name="Changes" comment="Shaping with coding_NOT PDF_BACKGROUND">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mail_test.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/run_debug_smtp.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/index_test.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Land_quaz_notif_FLASK.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Land_quaz_notif_FLASK.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/photo_2025-08-15_15-48-01.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/photo_2025-08-15_15-48-05.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/photo_2025-08-15_17-23-52.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/photo_2025-08-15_17-40-03.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/Land_page_1_en.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/Land_page_1_ru.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/hero_full.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/img/1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/img/2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/img/45525e4a-c543-4506-a244-722f784a1bd0.__CR0,0,800,600_PT0_SX800_V1___.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/img/67931a1608bfbaa97d019c05_66b0929089fba41bd4d24744_hire-now-developer-cost.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/img/AI.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/img/Cake.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/img/Land_page_1_en.png" beforeDir="false" afterPath="$PROJECT_DIR$/static/img/Land_page_1_en.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/img/Land_page_1_ru.png" beforeDir="false" afterPath="$PROJECT_DIR$/static/img/Land_page_1_ru.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/img/Land_page_2_en.png" beforeDir="false" afterPath="$PROJECT_DIR$/static/img/Land_page_2_en.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/img/graph1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/img/graph1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/img/graph2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/img/m1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/img/m1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/img/m2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/img/people_graph.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/robots.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/Ленд стор база.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/Ленд стор.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/Ленд стор_page – копія.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/Ленд стор_page.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/Ленд_стор_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/Ленд_стор_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/Фон Ленд 2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/Фон Ленд 4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/Фон Ленд 5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/Фон Ленд.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/Фон1.jfif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/Фон2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/вотсапп.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/form.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/form.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -73,6 +108,13 @@
       <workItem from="1756810920862" duration="10984000" />
       <workItem from="1756828621452" duration="109000" />
       <workItem from="1756887517395" duration="1877000" />
+      <workItem from="1756906334557" duration="6400000" />
+      <workItem from="1756995695064" duration="4907000" />
+      <workItem from="1757060531676" duration="115000" />
+      <workItem from="1757079963814" duration="4278000" />
+      <workItem from="1757162911526" duration="2232000" />
+      <workItem from="1757246077555" duration="6866000" />
+      <workItem from="1757318572229" duration="4481000" />
     </task>
     <task id="LOCAL-00001" summary="before en_ru trans">
       <option name="closed" value="true" />
@@ -90,7 +132,15 @@
       <option name="project" value="LOCAL" />
       <updated>1756744498527</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Shaping with coding_NOT PDF_BACKGROUND">
+      <option name="closed" value="true" />
+      <created>1756906668228</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1756906668228</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -98,6 +148,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="before en_ru trans" />
-    <option name="LAST_COMMIT_MESSAGE" value="before en_ru trans" />
+    <MESSAGE value="Shaping with coding_NOT PDF_BACKGROUND" />
+    <option name="LAST_COMMIT_MESSAGE" value="Shaping with coding_NOT PDF_BACKGROUND" />
   </component>
 </project>

@@ -1,88 +1,101 @@
 <!DOCTYPE html>
 <html lang="{{ lang }}">
 <head>
-    <meta charset="UTF-8">
-    <title>Форма заявки</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #111;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            font-family: Arial, sans-serif;
-        }
-        .form-container {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 30px;
-            border-radius: 12px;
-            width: 350px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
-        }
-        .form-container h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #000;
-        }
-        .form-container label {
-            display: block;
-            margin: 10px 0 5px;
-            color: #000;
-            font-size: 14px;
-        }
-        .form-container input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 14px;
-        }
-        .form-container button {
-            width: 100%;
-            padding: 12px;
-            background: #00cc44;
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        .form-container button:hover {
-            background: #009933;
-        }
-        .back-link {
-            display: block;
-            text-align: center;
-            margin-top: 15px;
-            font-size: 14px;
-        }
-        .back-link a {
-            text-decoration: none;
-            color: #00cc44;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>{{ t["title"] }}</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;           /* сторінка може рости */
+    }
+
+    body {
+      background: url("{{ bg }}") no-repeat center top;
+      background-size: cover;
+      background-attachment: scroll; /* fixed; <-- змінено */
+      color: #000;
+    }
+
+    .page-wrapper {
+      min-height: 150vh;      /* контент більше ніж 1 екран */
+      padding-bottom: 200px;  /* запас, щоб можна було прокрутити */
+    }
+      /*display: flex;               !* щоб контент розтягнувся *!*/
+      /*flex-direction: column;*/
+      /*justify-content: center;     !* форма по центру вертикалі *!*/
+
+    .lang-switch {
+      position: fixed;                         /* поверх контенту */
+      top: 20px;
+      right: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      z-index: 10;
+    }
+    .lang-switch a {
+      color: #000;
+      text-decoration: none;
+      margin: 0 8px;
+    }
+    .lang-switch a:hover { text-decoration: underline; }
+
+    .form-box {
+      background: rgba(255,255,255,0.95);
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 420px;
+      margin: 150px auto;                      /* щоб фон зверху було видно */
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      position: fixed;
+      top: 50%;          /* нижче центру */
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      background: #00cc44;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover { background: #009933; }
+  </style>
 </head>
 <body>
-    <div class="form-container">
-        <h2>Форма заявки</h2>
-        <form action="/submit" method="post">
-            <label>Ім'я</label>
-            <input type="text" name="name" required>
+  <div class="lang-switch">
+    <a href="{{ url_for('form', lang='ru') }}">RU</a> |
+    <a href="{{ url_for('form', lang='en') }}">EN</a>
+  </div>
 
-            <label>Телефон</label>
-            <input type="text" name="phone" required>
-
-            <label>Email</label>
-            <input type="email" name="email" required>
-
-            <button type="submit">Надіслати</button>
-        </form>
-        <div class="back-link">
-            <a href="/?lang={{ lang }}">⬅ Назад</a>
-        </div>
+  <div class="page-wrapper">
+  {% if not submitted %}
+    <div class="form-box">
+      <h3>{{ t["form_title"] }}</h3>
+      <form method="post">
+        <input type="text"   name="name"  placeholder="{{ t['form_name'] }}"  required><br>
+        <input type="text"   name="phone" placeholder="{{ t['form_phone'] }}" required><br>
+        <input type="email"  name="email" placeholder="{{ t['form_email'] }}" required><br>
+        <button type="submit">{{ t["form_submit"] }}</button>
+      </form>
     </div>
+
+  {% else %}
+    <div class="form-box">
+      <h3>{{ t["form_success"] }}</h3>
+    </div>
+  {% endif %}
+  </div>
 </body>
 </html>

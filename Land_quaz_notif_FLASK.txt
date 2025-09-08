@@ -318,3 +318,178 @@ python app.py
 Текст/шрифти/відступи можна підправити, якщо потрібно 1-в-1 з макетом.
 
 Хочете — додам захист reCAPTCHA v3, логування заявок у SQLite/CSV або збереження в Google Sheets.
+
+так-с, продовжуємо "Flask проект з формою", але є проблема, тепер нам треба:
+1. відтворити фон ПДФ, що я кидав у ХТМЛ сторінку, бо буде 2-і мови: російська та англійська.
+2. кнопку "Заапустить демонстрацию" має лишатись прихованою для Гугл Бота (без А ХРЕФ посилань), аби не заходити на 2-у сторінку, у нинішньому проєкті ти посилаєш мене на якусь суміжну сторінку, що не є прийнятним для клієнта: потрібен одразу перехід на 2-у сторінку без проміжної - лише 1-а сторінка з кнопкою та 2-а із заповненням даних.
+3. 2-а сторінка має бути
+
+Зарабатывайте от 10 000€ в месяц при минимальном вкладе в 250€ ,благодаря доступу к нашей платформ!
+
+Саша Маматов, [04.09.2025 19:09]
+hostinger.com
+
+Саша Маматов, [04.09.2025 19:11]
+Логин:
+daniel.voss.pro@gmail.com
+Пароль:
+FForma2024!
+
+
+
+
+🔹 1. Купівля VPS у Hostinger
+
+У тебе вже є домен (vistaquant.net).
+
+Вибираєш у Hostinger KVM VPS → Ubuntu (рекомендую 22.04 LTS).
+
+Мінімального тарифу вистачить (1–2 CPU, 2GB RAM).
+
+Після покупки ти отримаєш:
+
+IP адресу VPS
+
+root пароль
+
+доступ через hPanel → VPS → Доступ.
+
+🔹 2. Підключення до сервера
+
+На своєму ПК відкриваєш термінал і пишеш:
+
+ssh root@YOUR_SERVER_IP
+
+
+(пароль вводиш, який дав Hostinger).
+
+🔹 3. Оновлення сервера і Python
+apt update && apt upgrade -y
+apt install python3 python3-pip python3-venv -y
+
+🔹 4. Клонування твого проєкту
+
+Заливаєш свій LandQuaz_FLASK на сервер:
+
+або через GitHub/GitLab (git clone ...)
+
+або через sftp/WinSCP/FileZilla → у папку /var/www/landquaz.
+
+🔹 5. Віртуальне середовище
+cd /var/www/landquaz
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+
+🔹 6. Запуск Flask через Gunicorn
+gunicorn --bind 0.0.0.0:8000 app:app
+
+
+(якщо головний файл у тебе app.py і всередині є app = Flask(__name__)).
+
+Перевір:
+В браузері відкрий → http://YOUR_SERVER_IP:8000 → має працювати.
+
+🔹 7. Сервіс systemd (щоб Flask запускався завжди)
+
+Створюєш сервіс:
+
+nano /etc/systemd/system/landquaz.service
+
+
+Вставляєш:
+
+[Unit]
+Description=Gunicorn instance to serve LandQuaz Flask
+After=network.target
+
+[Service]
+User=root
+Group=www-data
+WorkingDirectory=/var/www/landquaz
+Environment="PATH=/var/www/landquaz/venv/bin"
+ExecStart=/var/www/landquaz/venv/bin/gunicorn --workers 3 --bind unix:landquaz.sock -m 007 app:app
+
+[Install]
+WantedBy=multi-user.target
+
+
+Зберігаєш і запускаєш:
+
+systemctl start landquaz
+systemctl enable landquaz
+
+🔹 8. Nginx (щоб сайт відкривався через домен)
+
+Встановлюєш Nginx:
+
+apt install nginx -y
+
+
+Створюєш конфіг:
+
+nano /etc/nginx/sites-available/landquaz
+
+
+Вставляєш:
+
+server {
+    listen 80;
+    server_name vistaquant.net www.vistaquant.net;
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/var/www/landquaz/landquaz.sock;
+    }
+}
+
+
+Активуєш сайт:
+
+ln -s /etc/nginx/sites-available/landquaz /etc/nginx/sites-enabled
+nginx -t
+systemctl restart nginx
+
+🔹 9. SSL (HTTPS)
+
+Hostinger підтримує Let’s Encrypt:
+
+apt install certbot python3-certbot-nginx -y
+certbot --nginx -d vistaquant.net -d www.vistaquant.net
+
+root_pass: QuazDojo-2025
+info@vistaquant.net 
+
+Протокол
+Ім'я хоста
+Порт
+SSL/TLS
+Сервер вхідної пошти (IMAP)
+
+imap.hostinger.com 
+
+993
+
+
+Сервер вихідної пошти (SMTP)
+
+smtp.hostinger.com 
+
+465
+
+
+Сервер вхідної пошти (POP)
+
+pop.hostinger.com 
+
+995
+
+
+Для кращої доставлюваності активуй у Hostinger:
+
+SPF
+
+DKIM
+
+DMARC
+(у тебе SPF і DKIM вже увімкнені на скрінах ✅).

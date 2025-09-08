@@ -1,70 +1,136 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
+
+import smtplib, os
+from email.mime.text import MIMEText
+from dotenv import load_dotenv
+
+
+# завантажуємо змінні з .env
+load_dotenv()
 
 app = Flask(__name__)
+app.secret_key = "supersecretkey"  # щоб працювала session
 
-# 🔑 Словник перекладів
+# Налаштування SMTP (Hostinger)
+# SMTP_HOST = os.getenv("SMTP_HOST")
+# SMTP_PORT = int(os.getenv("SMTP_PORT", 465))
+# SMTP_USER = os.getenv("SMTP_USER")
+# SMTP_PASS = os.getenv("SMTP_PASS")
+# RECIPIENTS = os.getenv("RECIPIENTS", SMTP_USER).split(",")
+
+SMTP_HOST = os.getenv("MAIL_SERVER", "smtp.hostinger.com")
+SMTP_PORT = int(os.getenv("MAIL_PORT", 465))
+SMTP_USER = os.getenv("MAIL_USER", "info@vistaquant.net")
+SMTP_PASS = os.getenv("MAIL_PASS", "secret")
+# RECIPIENTS = os.getenv("RECIPIENTS", SMTP_USER).split(",")
+RECIPIENTS = [addr.strip() for addr in os.getenv("RECIPIENTS", SMTP_USER).split(",")]
+
+# --- Переклади ---
 translations = {
     "ru": {
         "title": "Финансово-аналитическая модель W.A. AI™",
         "subtitle": "Инструменты для анализа данных и стабильных решений",
-        "intro": "Если вы выбрали нас, значит, вы ищете пассивный доход. Наша команда сотрудничает с разработчиками финансово-аналитической модели W.A. AI™, которая обеспечивает прозрачность и стабильность процессов. Вы можете проверить её работу в удобном режиме и оценить результат лично. При необходимости поддержку на каждом этапе готовы оказать консультанты.",
         "button1": "Запустить демонстрацию",
-        "button2": "Запустить демонстрацию",
-        "button3": "Запустить демонстрацию",
-        "card1_title": "Моделирование данных",
-        "card2_title": "Сценарная визуализация",
-        "card3_title": "Гипотетическая модель",
-        "section1_caption": "Мы используем AI для максимизации данных",
-        "section2": "Инструмент интеллектуальной автоматизации действий с данными. Анализ. Визуализация. Прогнозирование на базе W.A. AI™",
-        "section3": "Интегрировано в корпоративные процессы более 1500 команд. Это подтверждает ее надежность и технологическую устойчивость. Использование проверенных решений способствует стабильности и масштабируемости платформы.",
-        "section4": "Наша платформа используется в цифровых процессах более 1500 команд. Это подтверждает ее надежность и технологическую устойчивость. Использование проверенных решений способствует стабильности и масштабируемости платформы.",
-        "section5": "Система Scout™ для анализа сценариев. Вы можете в режиме реального времени отслеживать ключевые процессы и данные с помощью системы Scout™, которая обеспечивает высокую точность, надежность и прозрачность каждого этапа.",
-        "analysis_title": "Аналитический вывод"
+        "button2": "Узнать подробности",
+        "button3": "Проверить работу модели",
+        "form_title": "Пожалуйста, введите Ваши данные, чтобы получить доступ к демонстрации",
+        "form_name": "Имя",
+        "form_phone": "Телефон",
+        "form_email": "Email",
+        "form_submit": "Отправить",
+        "form_success": "Спасибо, Ваши данные не передаются третьим лицам, наши сотрудники свяжутся с Вами в ближайшее время"
     },
     "en": {
-        "title": "Financial-analytical model W.A. AI™",
-        "subtitle": "Tools for data analysis and stable decisions",
-        "intro": "By choosing us, you are looking for passive income. Our team works with developers of the financial-analytical model W.A. AI™, which ensures transparency and stability of processes. You can test its work in a convenient mode and evaluate the result personally. If necessary, support is provided at every stage.",
+        "title": "W.A. AI™ Financial Analysis Model",
+        "subtitle": "Tools for data analysis and stable solutions",
         "button1": "Start Demo",
-        "button2": "Start Demo",
-        "button3": "Start Demo",
-        "card1_title": "Data Modeling",
-        "card2_title": "Scenario Visualization",
-        "card3_title": "Hypothetical Model",
-        "section1_caption": "We use AI to maximize data",
-        "section2": "A tool for intelligent automation of data operations. Analysis. Visualization. Forecasting based on W.A. AI™",
-        "section3": "Integrated into corporate processes of more than 1500 teams. This confirms its reliability and technological sustainability. The use of proven solutions contributes to stability and scalability of the platform.",
-        "section4": "Our platform is used in digital processes of more than 1500 teams. This confirms its reliability and technological sustainability. The use of proven solutions contributes to stability and scalability of the platform.",
-        "section5": "Scout™ system for scenario analysis. You can track key processes and data in real time using Scout™, which provides high accuracy, reliability, and transparency at every stage.",
-        "analysis_title": "Analytical Report"
+        "button2": "Learn more",
+        "button3": "Check the model's performance",
+        "form_title": "Please, enter your data to get access to the demo",
+        "form_name": "Name",
+        "form_phone": "Phone",
+        "form_email": "Email",
+        "form_submit": "Send",
+        "form_success": "Thank you! Your data is not shared with third parties. Our team will contact you shortly."
     }
 }
 
-@app.route("/", methods=["GET", "POST"])
+# ---------- ГОЛОВНА ----------
+@app.route("/")
 def index():
-    lang = request.args.get("lang", "ru")  # за замовчуванням RU
+    lang = request.args.get("lang", "ru")
+    t = translations.get(lang, translations["ru"])
+
+    if lang == "en":
+        bg = url_for("static", filename="img/Land_page_1_en.png")
+    else:
+        bg = url_for("static", filename="img/Land_page_1_ru.png")
+
+    return render_template("index.html", bg=bg, lang=lang, t=t)
+
+# ---------- Надсилання листа через Mailtrap ----------
+def send_email(name, phone, email):
+    msg = MIMEText(f"Имя: {name}\nТелефон: {phone}\nEmail: {email}")
+    msg["Subject"] = "Новая заявка с лендинга"
+    msg["From"] = SMTP_USER
+    msg["To"] = ", ".join(RECIPIENTS)   # рядок для заголовка
+
+
+    # Якщо порт 1025 → тестовий режим
+    if SMTP_PORT == 1025:
+        with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as server:
+            server.sendmail(SMTP_USER, RECIPIENTS, msg.as_string())
+            print("✅ Тестовий лист відправлено (дивись у терміналі з smtpd)")
+    else: # реальний SMTP Hostinger
+        with smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT) as server:
+            server.login(SMTP_USER, SMTP_PASS)
+            server.sendmail(SMTP_USER, RECIPIENTS, msg.as_string())
+            print("✅ Реальний лист відправлено")
+
+    # try:
+    #     # Візьми логін/пароль із Mailtrap (Sandbox → Inboxes → SMTP settings)
+    #     with smtplib.SMTP("sandbox", 245345) as server:
+    #         # Для Mailtrap `starttls()` не обов’язковий, але не завадить
+    #         # server.starttls()
+    #         server.login("")
+    #         server.send_message(msg)
+    #         print("✅ Лист отправлен в Mailtrap")
+    # except Exception as e:
+    #     print("❌ Ошибка отправки:", e)
+
+# ---------- СТОРІНКА ФОРМИ ----------
+@app.route("/form", methods=["GET", "POST"])
+def form():
+    lang = request.args.get("lang", "ru")
     t = translations.get(lang, translations["ru"])
 
     if request.method == "POST":
-        return redirect(url_for("form_page", lang=lang))
+        name = request.form["name"]
+        phone = request.form["phone"]
+        email = request.form["email"]
 
-    return render_template("index.html", t=t, lang=lang)
+        # Надсилаємо лист у Mailtrap
+        send_email(name, phone, email)
 
-@app.route("/form", methods=["GET", "POST"])
-def form_page():
+        session["submitted"] = True
+        return redirect(url_for("form", lang=lang))
+
+    # фон другої сторінки
+    if lang == "en":
+        bg = url_for("static", filename="img/Land_page_2_en.png")
+    else:
+        bg = url_for("static", filename="img/Land_page_2_ru.png")
+
+    submitted = session.get("submitted", False)
+    return render_template("form.html", bg=bg, submitted=submitted, lang=lang, t=t)
+
+# утиліта, щоб почистити прапорець і знову побачити форму
+@app.route("/form/reset")
+def form_reset():
+    session.pop("submitted", None)
     lang = request.args.get("lang", "ru")
-    return render_template("form.html", lang=lang)
-
-@app.route("/submit", methods=["POST"])
-def submit():
-    name = request.form.get("name")
-    phone = request.form.get("phone")
-    email = request.form.get("email")
-
-    # Поки що просто виведемо в консоль (потім збережемо у файл/БД)
-    print(f"Нова заявка: {name}, {phone}, {email}")
-
-    return "Дякуємо, ваша заявка отримана!"
+    return redirect(url_for("form", lang=lang))
 
 if __name__ == "__main__":
     app.run(debug=True)
+

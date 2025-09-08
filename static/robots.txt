@@ -1,5 +1,0 @@
-@app.get("/robots.txt")
-def robots_txt():
-    resp = make_response("User-agent: *\nDisallow: /start\n")
-    resp.headers["Content-Type"] = "text/plain; charset=utf-8"
-    return resp

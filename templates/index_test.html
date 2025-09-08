@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+  <meta charset="UTF-8">
+  <title>Landing</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url("{{ bg }}") no-repeat center top;
+      background-size: cover;
+      background-attachment: fixed;
+      font-family: Arial, sans-serif;
+      color: #000;
+    }
+
+    .lang-switch {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      z-index: 10;
+    }
+    .lang-switch a {
+      color: #000;
+      text-decoration: none;
+      margin: 0 8px;
+    }
+    .lang-switch a:hover { text-decoration: underline; }
+
+    .block {
+      text-align: center;
+      margin: 120px auto;
+      max-width: 900px;
+      padding: 40px 20px;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 15px 30px;
+      background: #00cc44;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+      text-decoration: none;
+      border: none;
+      transition: background 0.3s;
+    }
+    .btn:hover { background: #009933; }
+  </style>
+</head>
+<body>
+  <div class="lang-switch">
+    <a href="{{ url_for('index', lang='ru') }}">RU</a> |
+    <a href="{{ url_for('index', lang='en') }}">EN</a>
+  </div>
+
+  <section class="block">
+    <h2>W.A. AI™</h2>
+    <p>{{ t["section1_text"] }}</p>
+    <button class="btn" onclick="window.location.href='{{ url_for('form', lang=lang) }}'">
+      {{ t["button1"] }}
+    </button>
+  </section>
+
+  <section class="block">
+    <h2>Intelligent data automation tool</h2>
+    <p>{{ t["section2_text"] }}</p>
+    <button class="btn" onclick="window.location.href='{{ url_for('form', lang=lang) }}'">
+      {{ t["button2"] }}
+    </button>
+  </section>
+
+  <section class="block">
+    <h2>Analytical conclusion</h2>
+    <p>{{ t["section3_text"] }}</p>
+    <button class="btn" onclick="window.location.href='{{ url_for('form', lang=lang) }}'">
+      {{ t["button3"] }}
+    </button>
+  </section>
+</body>
+</html>
