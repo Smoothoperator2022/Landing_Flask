@@ -1,0 +1,228 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+
+  /* 👇 фон */
+  background-image: url("/static/img/Land_page_1_ru_notext.png");
+  background-repeat: no-repeat;   /* не повторювати */
+  background-position: center top; /* вирівнювання */
+  background-size: contain;      /* фон зберігав пропорції картинки */
+  background-color: #f5f5f5; /* колір фону для боків */
+  min-height: 100vh;               /* висота сторінки = висота екрана */
+}
+/*background-size: cover; — обрізає фон по краях, щоб він покривав весь екран → тому у тебе нижня частина відрізалась.*/
+/*background-size: 100% 100%; — розтягує картинку рівно на весь екран (і по ширині, і по висоті).*/
+
+.overlay {
+  position: absolute;   /* приклеюється до координат */
+  color: #000;
+  max-width: 400px;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+/* Перемикач мов */
+.lang-switch {
+  position: absolute;
+  top: 20px;
+  right: 370px;
+  font-size: 18px;
+  font-weight: bold;
+  z-index: 9999;
+}
+.lang-switch a {
+  color: #000;
+  text-decoration: none;
+  margin: 0 8px;
+}
+.lang-switch a:hover {
+  text-decoration: underline;
+}
+
+/* Hero з фоном */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;   /* текст від верхнього краю */
+  justify-content: center;
+  text-align: center;
+  color: #000;
+
+  /* контроль відступу зверху */
+  padding-top: 20px;   /* 🔧 тут регулюй висоту */
+}
+
+.hero-content {
+  max-width: 800px;
+  padding: 50px;
+  margin-top: 0;   /* 🚫 ніяких -200px */
+  /*margin: 0 auto;*/
+  /*position: relative;*/
+  /*top: 50%;   !* зрушити вниз *!*/
+  /*left: 0%;   !* зрушити вправо *!*/
+}
+
+.hero-content h1,
+.hero-content h2,
+.hero-content p {
+  margin: 20;   /* прибирає стандартні відступи браузера */
+}
+
+/* Відстань між рядками */
+.hero-content > * + * {
+  margin-top: 20px; /* акуратні відступи між елементами */
+}
+
+/* Features */
+.features {
+  position: relative; /* сцена */
+  width: 100%;
+  background-size: contain;
+  min-height: 100vh;  /* щоб блок займав весь екран */
+}
+
+.features-overlay {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  top: 150px;  /* ⬅️ весь блок вниз на 100px */
+}
+
+.overlay-title {
+  position: absolute;
+  top: 16%;    /* від верхньої межі секції */
+  right: 18%; /* від правої межі */
+  font-size: 1.3vw; /* масштабований шрифт */
+  transform: translateY(20%); /* вирівнює по центру вертикалі */
+  max-width: 30%;
+  font-weight: normal;
+  text-align: center;
+  color: #000;
+
+}
+
+.overlay-btn {
+  position: absolute;
+  top: 50%;
+  right: 27%;
+  font-size: 18px;
+  transform: translateY(70%); /* вирівнює по центру вертикалі */
+  font-weight: normal;
+}
+
+.overlay-text-right {
+  position: absolute;
+  top: 60%;
+  right: 25%;
+  font-size: 18px;
+  transform: translateY(550%); /* вирівнює по центру вертикалі */
+  max-width: 300px;
+  text-align: center;
+}
+
+.overlay-text-left {
+  position: absolute;
+  top: 50%;
+  right: 35%;
+  font-size: 18px;
+  max-width: 600px;
+  text-align: justify;
+  transform: translateY(450%); /* вирівнює по центру вертикалі */
+}
+
+/*!* Scout *!*/
+
+.scout {
+  margin-top: 250px; /* або padding-top: 190px */
+  padding: 50px 0;   /* внутрішні відступи: зверху/знизу */
+}
+
+/* Кнопка ТІЛЬКИ в блоці Scout */
+.scout .btn {
+  margin-top: 0;              /* перекриває глобальне .btn */
+  margin-bottom: 150px;       /* ≈ 5 см (1 см ≈ 37.8 px) */
+  padding: 10px 30px;
+  background: #00cc44;
+  border-radius: 8px;
+  color: #000;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.scout-content {
+  max-width: 450px;        /* ширина колонки */
+  margin: 0 0 0 300px;   /* 120px зліва */          /* центрування по центру */
+  font-size: 1.1rem;
+  font-weight: normal;
+  text-align: justify;
+  color: #000;
+}
+
+/*.scout{*/
+/*  position: relative;*/
+/*  width: 100%;*/
+/*  padding: 50px ;  !* відступи зверху/знизу + поля по боках *!*/
+/*  !*background: #f5f9fb; можеш задати фон, якщо треба *!*/
+/*  text-align: center;  !* центрування тексту і кнопки *!*/
+/*}*/
+
+/*.scout-btn {*/
+/*  display: inline-block;*/
+/*  padding: 20px 30px;*/
+/*  background: #00cc44;*/
+/*  border-radius: 8px;*/
+/*  color: #000;*/
+/*  cursor: pointer;*/
+/*  font-size: 20px;   !* розмір тексту *!*/
+/*  font-weight: bold; !* жирний *!*/
+/*  text-decoration: none;*/
+/*  !* margin-top: 100px;  відступ вниз від тексту *!*/
+/*  !* margin-top: 0.8em;відступ у висоті рядка *!*/
+/*  margin-top: 50%;  !* замість 100px *!*/
+/*}*/
+
+/*.scout-content{*/
+/*  position: relative;*/
+/*  !*top: 17%;    !* від верхньої межі секції *!*!*/
+/*  margin: 100px 0 0 10%;  !* верхній відступ + зсув ліворуч *!*/
+/*  max-width: 500px;       !* щоб не розпливалось на всю ширину *!*/
+/*   !* right: 21%; від правої межі *!*/
+/*  font-size: 1.1rem;      !* замість vw — щоб текст не з’їжджав *! !* font-size: 1.3vw; масштабований шрифт *!*/
+/*  !* transform: translateY(20%); вирівнює по центру вертикалі *!*/
+/*  !*max-width: 28%;*!*/
+/*  font-weight: normal;*/
+/*  text-align: left;*/
+/*  color: #000;*/
+/*}*/
+
+
+
+
+/* Footer */
+footer {
+   /* background: rgba(0,0,0,0.7); напівпрозорий чорний */
+  color: #fff;
+  padding: 15px 250px;
+  text-align: justify;
+  font-size: 0.7rem;
+  max-width: 65%;
+}
+
+/* Кнопка */
+.btn {
+  display: inline-block;
+  padding: 20px 30px;
+  background: #00cc44;
+  border-radius: 8px;
+  color: #000;
+  cursor: pointer;
+  font-size: 20px;   /* розмір тексту */
+  font-weight: bold; /* жирний */
+  text-decoration: none;
+  margin-top: 100px;         /* відступ вниз від тексту */
+}
+.btn:hover {
+  background: #009933;
+}

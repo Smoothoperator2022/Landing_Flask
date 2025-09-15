@@ -21,6 +21,9 @@ venv/
 # test files
 mail_test.py
 run_debug_smtp.py
+Land_quaz_notif_FLASK.txt
+Land_quaz_notif_DJANGO.txt
+
 
 # System
 .DS_Store

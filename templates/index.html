@@ -2,83 +2,73 @@
 <html lang="{{ lang }}">
 <head>
   <meta charset="UTF-8">
-  <title>Landing</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: url("{{ bg }}") no-repeat center top;
-      background-size: cover;
-      height: 100vh;
-    }
-    .lang-switch {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        font-size: 18px;
-        font-weight: bold;
-        z-index: 2; /* щоб мова була поверх фону */
-    }
-    .lang-switch a {
-        color: #000;   /* чорний */
-        text-decoration: none;
-        margin: 0 8px;
-    }
-    .lang-switch a:hover {
-        text-decoration: underline;
-    }
-    .bg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: auto;
-      z-index: -1;
-    }
-    /*z-index: 2; то все, що всередині (кнопки) гарантовано вище за фон.*/
-    .content {
-      position: relative;
-      z-index: 2;
-      height: 100vh;
-    }
-    .btn {
-      position: absolute;
-      padding: 15px 30px;
-      background: #00cc44;
-      border-radius: 8px;
-      color: white;
-      cursor: pointer;
-      font-size: 16px;
-      text-decoration: none; /* прибрати підкреслення */
-      display: inline-block;
-    }
-    .btn:hover {
-      background: #009933;
-    }
-    /* кожну кнопку ставимо окремо, top: 2500px - прибрав піксель, щоб масштабування не збивало */
-    .btn1 { top: 100%; left: 52%; transform: translateX(-50%); }
-    .btn2 { top: 210%; left: 75%; transform: translateX(-50%); }
-    .btn3 { top: 340%; left: 25%; transform: translateX(-50%); }
-  </style>
+  <title>{{ t["title"] }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-  <div class="lang-switch">
-      <a href="{{ url_for('index', lang='ru') }}">RU</a> |
-      <a href="{{ url_for('index', lang='en') }}">EN</a>
-  </div>
 
-  <img src="{{ bg }}" alt="background" class="bg">
+  <body>
+    <!-- Перемикач мов -->
+    <div class="lang-switch">
+        <a href="{{ url_for('index', lang='ru') }}">RU</a> |
+        <a href="{{ url_for('index', lang='en') }}">EN</a>
+    </div>
 
-  <div class="content">
-      <button class="btn btn1" onclick="window.location.href='{{ url_for('form', lang=lang) }}'">
-            {{ t["button1"] }}
-      </button>
-      <button class="btn btn2" onclick="window.location.href='{{ url_for('form', lang=lang) }}'">
-            {{ t["button2"] }}
-      </button>
-      <button class="btn btn3" onclick="window.location.href='{{ url_for('form', lang=lang) }}'">
-            {{ t["button3"] }}
-      </button>
-  </div>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-content">
+          <h1>{{ t["title"] }}</h1>
+          <h2>{{ t["subtitle"] }}</h2>
+          <p>{{ t["text1"] }}</p>
+          <a href="{{ url_for('form', lang=lang) }}" class="btn">
+              {{ t["button1"] }}
+          </a>
+      </div>
+    </section>
+
+
+    <!-- Features -->
+    <section class="features">
+      <div class="features-overlay">
+
+        <!-- Заголовок праворуч -->
+        <h2 class="overlay-title">
+          {{ t["text2"] }}
+        </h2>
+
+        <!-- Кнопка -->
+        <a href="{{ url_for('form', lang=lang) }}" class="btn overlay-btn">
+          {{ t["button2"] }}
+        </a>
+
+        <!-- Текст праворуч -->
+        <p class="overlay-text-right">
+          {{ t["text3"] }}
+        </p>
+
+        <!-- Текст під AI -->
+        <p class="overlay-text-left">
+          {{ t["text4"] }}
+        </p>
+      </div>
+    </section>
+
+  <!-- Scout -->
+  <section class="scout">
+    <div class="scout-content">
+      <a href="{{ url_for('form', lang=lang) }}" class="btn">{{ t["button3"] }}</a>
+      <h2>Scout™</h2>
+      <p>{{ t["scout"] }}</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <h3>{{ t["title_company"] }}</h3>
+      <p>{{ t["company_contact"] }}</p>
+      <small>{{ t["impressum"] }}</small>
+    </div>
+  </footer>
 </body>
 </html>

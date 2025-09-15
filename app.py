@@ -29,7 +29,31 @@ RECIPIENTS = [addr.strip() for addr in os.getenv("RECIPIENTS", SMTP_USER).split(
 translations = {
     "ru": {
         "title": "Финансово-аналитическая модель W.A. AI™",
+        "title_form":"Встречайте W.A. AI™",
         "subtitle": "Инструменты для анализа данных и стабильных решений",
+        "subtitle_form":"Зарабатывайте от 10 000€ в месяц при минимальном вкладе в 250€ ,благодаря доступу к нашей платформ!",
+        "text1": """Если вы выбрали нас, значит, вы ищете стабильные решения для дохода 
+            без постоянного участия. Наша команда сотрудничает с разработчиками 
+            финансово-аналитической модели W.A. AI™, которая обеспечивает прозрачность 
+            и стабильность процессов. Вы можете проверить её работу в удобном режиме 
+            и оценить результат лично. При необходимости наши консультанты готовы 
+            оказать поддержку на каждом этапе.""",
+        "text2": "Инструмент интеллектуальной автоматизации действий с данными. Анализ. Визуализация. Прогнозирование — на базе W.A. AI™",
+        "text3": "Интегрировано в корпоративные процессы более 1500 команд",
+        "text4": """Наша платформа используется в цифровых процессах более 1500 команд.
+                    Это подтверждает ее надежность и технологическую устойчивость.
+                    Использование проверенных решений способствует стабильности и масштабируемости платформы.""",
+        "scout": """Система Scout™ для анализа сценариев
+                    Вы можете в режиме реального времени отслеживать ключевые
+                    процессы и данные с помощью системы Scout™, которая обеспечивает высокую
+                    точность, надежность и прозрачность каждого этапа""",
+        "title_company": "W.A. AI™",
+        "company_contact":"""Company Name: Voss Digital Solutions. Managing Director: Daniel Voss. Address: Musterstrasse 12, 10115 Berlin, Germany.
+        Contact:Phone: +49 (0)30 1234567, e-mail: info@vistaquant.net. Responsible for content (according to § 55 Abs. 2 RStV): Daniel Voss, address as above""",
+        "impressum":"""The contents of this website were created with great care. However, we cannot guarantee the accuracy, completeness or timeliness of the information provided. As a service provider, we are responsible for our own content on
+        these pages in accordance with general laws. We are not obligated to monitor transmitted or stored third-party information or to investigate circumstances that indicate illegal activity. Liability for links: Our offer contains links
+        to external websites of third parties, on whose contents we have no influence. Therefore, we cannot assume any liability for these external contents. The respective provider or operator of the pages is always responsible for the
+        content of the linked pages. Furthermore, this website does not provide financial or investment advice. Any information is for demonstration purposes only and must not be relied upon as a basis for financial decisions.""",
         "button1": "Запустить демонстрацию",
         "button2": "Узнать подробности",
         "button3": "Проверить работу модели",
@@ -42,10 +66,31 @@ translations = {
     },
     "en": {
         "title": "W.A. AI™ Financial Analysis Model",
+        "title_form": "Meet W.A. AI™",
         "subtitle": "Tools for data analysis and stable solutions",
+        "subtitle_form": "Earn from €10,000 per month with a minimum deposit of €250 by accessing our platform!",
+        "text1": """If you have chosen us, it means you are looking for stable income 
+            solutions without constant involvement. Our team works with the developers 
+            of the W.A. AI™ financial analysis model, which ensures transparency 
+            and stability of processes. You can check how it works at your convenience 
+            and evaluate the results yourself. If necessary, our consultants are 
+            ready to provide support at every stage.""",
+        "text2": "An intelligent tool for automating data operations. Analysis. Visualization. Forecasting — powered by W.A. AI™",
+        "text3": "Integrated into corporate processes of more than 1500 teams",
+        "text4": """Our platform is already used in the digital workflows of more than 1500 teams. 
+                    This proves its reliability and technological resilience. 
+                    Using trusted solutions contributes to the platform’s stability and scalability.""",
+        "scout": """The Scout™ system for scenario analysis. 
+                    You can track key processes and data in real time with Scout™, 
+                    which ensures high accuracy, reliability, and transparency at every stage.""",
+        "title_company": "W.A. AI™",
+        "company_contact": """Company Name: Voss Digital Solutions. Managing Director: Daniel Voss. Address: Musterstrasse 12, 10115 Berlin, Germany.
+        Contact: Phone: +49 (0)30 1234567, e-mail: info@vistaquant.net. Responsible for content (according to § 55 Abs. 2 RStV): Daniel Voss, address as above""",
+        "impressum": """The contents of this website were created with great care. However, we cannot guarantee the accuracy, completeness or timeliness of the information provided...
+        (залишаємо як у тебе, англійський текст був правильний)""",
         "button1": "Start Demo",
-        "button2": "Learn more",
-        "button3": "Check the model's performance",
+        "button2": "Learn More",
+        "button3": "Check the Model",
         "form_title": "Please, enter your data to get access to the demo",
         "form_name": "Name",
         "form_phone": "Phone",
@@ -62,9 +107,9 @@ def index():
     t = translations.get(lang, translations["ru"])
 
     if lang == "en":
-        bg = url_for("static", filename="img/Land_page_1_en.png")
+        bg = url_for("static", filename="img/Land_page_1_en_notext.png")
     else:
-        bg = url_for("static", filename="img/Land_page_1_ru.png")
+        bg = url_for("static", filename="img/Land_page_1_ru_notext.png")
 
     return render_template("index.html", bg=bg, lang=lang, t=t)
 
@@ -117,9 +162,9 @@ def form():
 
     # фон другої сторінки
     if lang == "en":
-        bg = url_for("static", filename="img/Land_page_2_en.png")
+        bg = url_for("static", filename="img/Land_page_2_en_notext.png")
     else:
-        bg = url_for("static", filename="img/Land_page_2_ru.png")
+        bg = url_for("static", filename="img/Land_page_2_ru_notext.png")
 
     submitted = session.get("submitted", False)
     return render_template("form.html", bg=bg, submitted=submitted, lang=lang, t=t)
