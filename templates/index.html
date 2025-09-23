@@ -2,73 +2,152 @@
 <html lang="{{ lang }}">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ t["title"] }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
+  <!-- Перемикач мов -->
+  <div class="lang-switch">
+    <a href="/?lang=ru">RU</a>
+    <a href="/?lang=en">EN</a>
+  </div>
 
-  <body>
-    <!-- Перемикач мов -->
-    <div class="lang-switch">
-        <a href="{{ url_for('index', lang='ru') }}">RU</a> |
-        <a href="{{ url_for('index', lang='en') }}">EN</a>
+
+  <div class="container">
+    <h1>{{ t["title"] }}</h1>
+    <h2>{{ t["subtitle"] }}</h2>
+
+    <div class="section">
+      <p>{{ t["text1"] }}</p>
     </div>
 
-    <!-- Hero -->
-    <section class="hero">
-      <div class="hero-content">
-          <h1>{{ t["title"] }}</h1>
-          <h2>{{ t["subtitle"] }}</h2>
-          <p>{{ t["text1"] }}</p>
-          <a href="{{ url_for('form', lang=lang) }}" class="btn">
-              {{ t["button1"] }}
-          </a>
+    <h3 style="text-align:center; font-size: 28px; margin:14px 0 44px">W.A. AI™</h3>
+
+    <!-- Кнопка -->
+    <div class="cta-wrap" style="text-align:center; margin-top:20px;">
+      <a class="btn" href="#contact">{{ t["button1"] }}</a>
+    </div>
+  </div>
+
+  <section class="hero container">
+    <div class="card">
+
+
+      <!-- Сітка карток -->
+      <div class="cards">
+
+        <div class="mini">
+          <h4>{{ t["card1_title"] }}</h4>
+          <div class="val">{{ t["card1_value"] }}</div>
+          <div class="meta">{{ t["card1_meta"] }}</div>
+        </div>
+
+        <div class="mini">
+          <h4>{{ t["card2_title"] }}</h4>
+          <div class="val">{{ t["card2_value"] }}</div>
+          <div class="meta">{{ t["card2_meta"] }}</div>
+        </div>
+
+        <div class="mini">
+          <h4>{{ t["card3_title"] }}</h4>
+          <div class="val">{{ t["card3_value"] }}</div>
+          <div class="meta">{{ t["card3_meta"] }}</div>
+        </div>
+
+<!--        <div class="mini">-->
+<!--          <h4>{{ t["card4_title"] }}</h4>-->
+<!--          <div class="val">{{ t["card4_value"] }}</div>-->
+<!--          <div class="meta">{{ t["card4_meta"] }}</div>-->
+<!--        </div>-->
       </div>
-    </section>
 
-
-    <!-- Features -->
-    <section class="features">
-      <div class="features-overlay">
-
-        <!-- Заголовок праворуч -->
-        <h2 class="overlay-title">
-          {{ t["text2"] }}
-        </h2>
-
-        <!-- Кнопка -->
-        <a href="{{ url_for('form', lang=lang) }}" class="btn overlay-btn">
-          {{ t["button2"] }}
-        </a>
-
-        <!-- Текст праворуч -->
-        <p class="overlay-text-right">
-          {{ t["text3"] }}
-        </p>
-
-        <!-- Текст під AI -->
-        <p class="overlay-text-left">
-          {{ t["text4"] }}
-        </p>
-      </div>
-    </section>
-
-  <!-- Scout -->
-  <section class="scout">
-    <div class="scout-content">
-      <a href="{{ url_for('form', lang=lang) }}" class="btn">{{ t["button3"] }}</a>
-      <h2>Scout™</h2>
-      <p>{{ t["scout"] }}</p>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer>
-    <div class="footer-content">
-      <h3>{{ t["title_company"] }}</h3>
-      <p>{{ t["company_contact"] }}</p>
-      <small>{{ t["impressum"] }}</small>
+  <section class="row container">
+    <img src="{{ url_for('static', filename='img/AI_photo.png') }}" alt="AI">
+
+    <div class="text">
+      <h3>{{ t["text2"] }}</h3>
+
+<!--      <p>{{ t["text3"] }}</p>-->
     </div>
-  </footer>
+
+<!--    &lt;!&ndash; кнопка окремо &ndash;&gt;-->
+<!--    <a class="btn big-btn center-btn" href="#scout">{{ t["button2"] }}</a>-->
+  </section>
+  <!-- кнопка окремо -->
+  <div class="btn-wrapper">
+    <a class="btn big-btn" href="#scout">{{ t["button2"] }}</a>
+  </div>
+
+  <section class="charts container">
+    <h3>{{ t["text4"] }}</h3>
+
+    <!-- Плаваючий графік у правому верхньому куті -->
+<!--    <img class="floating-graph" src="{{ url_for('static', filename='img/graph_pen.jpg') }}" alt="Graph">-->
+
+    <!-- HTML — додай окремі класи кожному з двох зображень -->
+    <div class="chart-row">
+      <img src="{{ url_for('static', filename='img/monitor_code.png') }}"
+           alt="Code on monitor"
+           class="resizable left-img">
+      <img src="{{ url_for('static', filename='img/graph_pen.jpg') }}"
+           alt="People with graphs"
+           class="resizable right-img">
+    </div>
+  </section>
+
+<!-- СКАУТ -->
+  <section class="scout container">
+      <div class="scout-grid">
+          <div class="scout-left">
+
+            <div class="scout-text justify">
+              {{ t["scout"] }}
+            </div>
+          </div>
+
+          <div class="scout-right">
+            <div class="anal-card">
+              <h4>{{ t["anal_title"] }}</h4>
+              <div class="val">25,050</div>
+              <div class="meta-row">
+                <div class="meta-box">
+                  <div class="meta-label">Income</div>
+                  <div class="meta-value">1,400.24</div>
+                  <div class="meta-change plus">+12%</div>
+                </div>
+                <div class="meta-box">
+                  <div class="meta-label">Expenses</div>
+                  <div class="meta-value">40.00</div>
+                  <div class="meta-change minus">+9%</div>
+                </div>
+              </div>
+            </div>
+
+            <a href="#demo" class="btn big-btn pinned-btn">Проверить работу модели</a>
+
+          </div>
+      </div>
+
+        <!-- ПРАВА КОЛОНКА: візуалізація Scout -->
+        <!--    <div class="scout-right">-->
+        <!--      <img-->
+        <!--        class="scout-visual"-->
+        <!--        src="{{ url_for('static', filename='img/people_grapic.png') }}"-->
+        <!--        alt="Scout™"-->
+        <!--      />-->
+        <!--    </div>-->
+
+  </section>
+
+  <!-- Чорний футер -->
+  <div class="footer">
+    <h3>{{ t["title_company"] }}</h3>
+    <p>{{ t["company_contact"] }}</p>
+    <p>{{ t["impressum"] }}</p>
+  </div>
 </body>
 </html>

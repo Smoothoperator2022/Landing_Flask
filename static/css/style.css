@@ -1,228 +1,464 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-
-  /* 👇 фон */
-  background-image: url("/static/img/Land_page_1_ru_notext.png");
-  background-repeat: no-repeat;   /* не повторювати */
-  background-position: center top; /* вирівнювання */
-  background-size: contain;      /* фон зберігав пропорції картинки */
-  background-color: #f5f5f5; /* колір фону для боків */
-  min-height: 100vh;               /* висота сторінки = висота екрана */
-}
-/*background-size: cover; — обрізає фон по краях, щоб він покривав весь екран → тому у тебе нижня частина відрізалась.*/
-/*background-size: 100% 100%; — розтягує картинку рівно на весь екран (і по ширині, і по висоті).*/
-
-.overlay {
-  position: absolute;   /* приклеюється до координат */
+  background: linear-gradient(to bottom right, #8be28f, #3bc088);
   color: #000;
-  max-width: 400px;
+}
+
+.container {
+  width: 90%;        /* завжди 90% від ширини екрану */
+  max-width: 1200px; /* але не більше ніж 1200px */
+  margin: 0 auto;    /* центрує блок */
+  padding: 20px;
+}
+
+.cards {
+  display: grid;
+  /*grid-template-columns: repeat(4, 1fr); !* 4 в ряд *!*/
+  grid-template-columns: repeat(3, minmax(0, 1fr)); /* 4 колонки */
+  gap: 30px;            /* більше простору між картками */
+  margin: 20px auto;
+  max-width: 1200px; /* щоб картки не розтягувались */
+}
+
+.cards .mini {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,.08);
+}
+
+.mini {
+  background: #fff;
+  border-radius: 14px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,.06);
+}
+
+.mini h4 {
+  margin: 0 0 8px;
+  font-size: 15px;
+  color: #1b372c;
+}
+
+.mini .val {
+  font-weight: 800;
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+
+.mini .meta {
+  font-size: 14px;
+  color: #1a7c49;
+}
+
+.btn {
+  background: #0d7d4d;
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 18px 36px;   /* товща і ширша: визначає висоту (12px зверху/знизу) і ширину (22px зліва/справа).*/
+  font-weight: 600;
+  font-size: 18px;      /* більший текст */
+  cursor: pointer;
+  box-shadow: 0 12px 18px rgba(13,125,77,.28);
+  text-decoration: none;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+h1 {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 20px;
+  line-height: 1.3;
+}
+
+h2 {
+  text-align: center;
+  font-size: 22px;
+  font-weight: normal;
+  margin-bottom: 30px;  /* більше простору під субтитул */
+  line-height: 1.5;
+}
+
+.section {
+  margin-bottom: 40px;  /* більше повітря між секціями */
+}
+
+.section h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 900px) {
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* AI photo */
+/* Блок із фото і текстом */
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;   /* вирівняти по верхньому краю */
+  margin: 20px auto;
+  max-width: 1200px;
+}
+
+.row img {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0,0,0,.12);
+}
+
+/* Текстова частина */
+.row .text {
   font-size: 18px;
+  line-height: 1.3;
+  text-align: justify;
+  display: flex;
+  flex-direction: column;  /* дозволяє кнопку поставити вниз */
+  justify-content: space-between;
+}
+
+/* Кнопка під текстом */
+/* Центруємо кнопку */
+.btn-wrapper {
+  text-align: center;   /* центрує всередині контейнера */
+  margin: 40px 0;       /* відступи зверху і знизу */
+}
+
+/* робимо кнопку більшою */
+.big-btn {
+  padding: 20px 48px;   /* внутрішні відступи */
+  font-size: 20px;      /* збільшений шрифт */
+  border-radius: 999px;
+  box-shadow: 0 12px 20px rgba(13,125,77,.3);
+}
+
+/*.row .text h3 {*/
+/*  margin-bottom: 80px; !* відступ під заголовком *!*/
+/*}*/
+
+/*.row .text p {*/
+/*  margin-bottom: 10px; !* відступ під абзацом *!*/
+/*}*/
+
+/*.row .btn {*/
+/*  margin-top: 20px;*/
+/*  display: inline-block;           !* робимо блочним *!        !* кнопка стає блочним елементом *!*/
+/*  margin: 20px auto;        !* центрує по горизонталі *! !* щоб кнопка не прилипала *!*/
+
+/*  padding: 16px 36px;    !* зробимо її більшою *!*/
+/*  text-align: center;    !* текст усередині по центру *!*/
+/*  align-content: center;*/
+/*}*/
+
+
+/* Graphics */
+.charts {
+  position: relative; /* щоб можна було розміщати плаваючий графік */
+  text-align: center;
+  margin: 20px auto;
+  max-width: 1200px;
+}
+
+.charts h3 {
+  font-size: 22px;
+  margin-bottom: 40px;
+  line-height: 1.6;
+  text-align: justify; /* вирівняти края тексту */
+  top: -30px;   /* регулюй відступ зверху */
+  right: -20px; /* регулюй відступ праворуч */
+  width: 1200px; /* регулюй розмір */
+}
+
+.chart-row {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 40px;
+  align-items: center;
+  overflow: visible;          /* щоб зміщення не обрізались */
+}
+
+.chart-row img {
+  width: 100%;
+  height: 320px;        /* однакова висота */
+  object-fit: cover;    /* обрізає, але пропорції зберігаються */
+  /*margin-right: 30px; !* посунути вправо *!*/
+  /*margin-top: -40px;  !* підняти вверх *!*/
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0,0,0,.12);
+  display: block;
+  object-fit: cover;
+}
+
+/* Плаваючий графік у верхньому правому куті */
+.floating-graph {
+  position: absolute;
+  top: -30px;   /* регулюй відступ зверху */
+  right: -20px; /* регулюй відступ праворуч */
+  width: 480px; /* регулюй розмір */
+  opacity: 0.9;
+  z-index: 2;        /* поверх картинок */
+  pointer-events: none;  /* не блокує кліки по тексту під ним */
+}
+
+/* Ліва картинка: трохи лівіше і нижче */
+.left-img {
+  transform: translate(-32px, 10px);  /* X, Y у px */
+}
+
+/* Права картинка: трохи правіше і вище */
+.right-img {
+  transform: translate(-32px, 10px);
+}
+
+
+/* Додаткові можливості для експериментів */
+.resizable {
+  transition: transform 0.3s ease;
+}
+
+.resizable:hover {
+  transform: scale(0.95); /* зменшується при наведенні */
+  cursor: grab;
+}
+
+@media (max-width: 900px) {
+  .chart-row {
+    grid-template-columns: 1fr;
+  }
+  .floating-graph {
+    display: none; /* на мобілках можна сховати */
+  }
+}
+
+
+/* --- SCOUT --- */
+.scout {
+  margin: 90px auto 60px;
+  max-width: 1200px;
+
+}
+
+.scout-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;   /* ліва трохи ширша */
+  gap: 40px;
+  align-items: start;  /* вирівняти по верхньому краю */
+}
+
+.scout-left {
+  /*position: relative;*/
+  /*min-height: 420px;                  !* щоб було місце і для кнопки зверху, і для тексту знизу *!*/
+  font-size: 22px;
+  line-height: 1.6;
+  text-align: justify;
+}
+
+.scout-right {
+  display: flex;
+  flex-direction: column;  /* ставимо елементи стовпчиком */
+  align-items: center;     /* центрує по горизонталі */
+  gap: 20px;               /* відстань між карткою і кнопкою */
+}
+
+.right-btn {
+  padding: 14px 28px;
+  font-size: 18px;
+  box-shadow: 0 6px 16px rgba(0,0,0,.15);
+}
+
+/* кнопка зверху зліва */
+.pinned-btn {
+  margin-bottom: 0px;  /* відступ від тексту */
+  position: static;     /* більше не absolute */
+  display: inline-block;
+}
+
+.big-btn {
+  padding: 16px 28px;
+  font-size: 18px;
+  box-shadow: 0 10px 24px rgba(12, 110, 66, .25);
+}
+
+/* картка-аналітика по центру лівої колонки */
+.anal-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  width: 320px; /* регулюй під макет */
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,.12);
+  margin: 20px 0; /* відступи від інших блоків */
+}
+
+.anal-card h4 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #222;
+}
+
+.anal-card .val {
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 18px;
+  color: #111;
+}
+
+.meta-row {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+}
+
+.meta-box {
+  background: #f9f9f9;
+  border-radius: 10px;
+  padding: 10px;
+  flex: 1;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,.08);
+}
+
+.meta-label {
+  font-size: 13px;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.meta-value {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.meta-change {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.meta-change.plus {
+  color: #0a8a40; /* зелений для позитивних значень */
+}
+
+.meta-change.minus {
+  color: #d33; /* червоний для негативних */
+}
+
+
+/* текст нижче зліва */
+.scout-text {
+  /*position: absolute;*/
+  left: 0;
+  bottom: 0;
+  font-size: 22px;
+  max-width: 600px;
+  text-align: left;
   line-height: 1.6;
 }
+
+.justify { text-align: justify; }     /* рівний абзац (обидва краї) */
+
+/* права колонка з «тортиком» */
+.scout-right { text-align: center; }
+.scout-visual {
+  width: min(440px, 100%);
+  border-radius: 14px;
+  filter: drop-shadow(0 12px 24px rgba(0,0,0,.12));
+}
+
+/* адаптив */
+@media (max-width: 980px) {
+  .scout-grid {
+    grid-template-columns: 1fr;       /* в один стовпчик */
+  }
+  .scout-left {
+    min-height: 620px;
+  }
+  .scout-text {
+    position: static;                 /* без absolute на мобілках */
+    margin-top: 18px;
+  }
+  .pinned-btn {
+    position: static;                 /* кнопка стає звичайною у потоці */
+    margin-bottom: 18px;
+  }
+  .anal-card {
+    margin: 0 auto 12px;              /* по центру */
+  }
+}
+
+/* Імпресум */
+.footer {
+  background: #000;
+  width: 100%;        /* завжди 90% від ширини екрану */
+  max-width: 1200px; /* але не більше ніж 1200px */
+  color: #fff;
+  font-size: 12px;
+  padding: 30px;
+  text-align: justify;
+  line-height: 1.5;
+  margin: 0 auto; /* так футер теж матиме рівні відступи */
+}
+
+.footer h3 {
+  margin: 0 0 15px 0;
+  font-size: 16px;
+
+}
+
+.footer p {
+  margin: 8px 0;
+  width: 100%;        /* завжди 90% від ширини екрану */
+  margin: 0 auto; /* так футер теж матиме рівні відступи */
+}
+
 
 /* Перемикач мов */
 .lang-switch {
   position: absolute;
   top: 20px;
-  right: 370px;
+  right: 70px;
   font-size: 18px;
   font-weight: bold;
   z-index: 9999;
 }
+
 .lang-switch a {
   color: #000;
   text-decoration: none;
   margin: 0 8px;
 }
+
+/*  color: white;*/
+/*  background: #000;*/
+/*  padding: 5px 10px;*/
+/*  margin-left: 5px;*/
+/*  border-radius: 4px;*/
+/*  text-decoration: none;*/
+/*  font-size: 14px;*/
+/*}*/
+
 .lang-switch a:hover {
+  /*background: #444;*/
   text-decoration: underline;
 }
 
-/* Hero з фоном */
-.hero {
-  min-height: 100vh;
-  display: flex;
-  align-items: flex-start;   /* текст від верхнього краю */
-  justify-content: center;
-  text-align: center;
-  color: #000;
-
-  /* контроль відступу зверху */
-  padding-top: 20px;   /* 🔧 тут регулюй висоту */
-}
-
-.hero-content {
-  max-width: 800px;
-  padding: 50px;
-  margin-top: 0;   /* 🚫 ніяких -200px */
-  /*margin: 0 auto;*/
-  /*position: relative;*/
-  /*top: 50%;   !* зрушити вниз *!*/
-  /*left: 0%;   !* зрушити вправо *!*/
-}
-
-.hero-content h1,
-.hero-content h2,
-.hero-content p {
-  margin: 20;   /* прибирає стандартні відступи браузера */
-}
-
-/* Відстань між рядками */
-.hero-content > * + * {
-  margin-top: 20px; /* акуратні відступи між елементами */
-}
-
-/* Features */
-.features {
-  position: relative; /* сцена */
-  width: 100%;
-  background-size: contain;
-  min-height: 100vh;  /* щоб блок займав весь екран */
-}
-
-.features-overlay {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  top: 150px;  /* ⬅️ весь блок вниз на 100px */
-}
-
-.overlay-title {
-  position: absolute;
-  top: 16%;    /* від верхньої межі секції */
-  right: 18%; /* від правої межі */
-  font-size: 1.3vw; /* масштабований шрифт */
-  transform: translateY(20%); /* вирівнює по центру вертикалі */
-  max-width: 30%;
-  font-weight: normal;
-  text-align: center;
-  color: #000;
-
-}
-
-.overlay-btn {
-  position: absolute;
-  top: 50%;
-  right: 27%;
-  font-size: 18px;
-  transform: translateY(70%); /* вирівнює по центру вертикалі */
-  font-weight: normal;
-}
-
-.overlay-text-right {
-  position: absolute;
-  top: 60%;
-  right: 25%;
-  font-size: 18px;
-  transform: translateY(550%); /* вирівнює по центру вертикалі */
-  max-width: 300px;
-  text-align: center;
-}
-
-.overlay-text-left {
-  position: absolute;
-  top: 50%;
-  right: 35%;
-  font-size: 18px;
-  max-width: 600px;
-  text-align: justify;
-  transform: translateY(450%); /* вирівнює по центру вертикалі */
-}
-
-/*!* Scout *!*/
-
-.scout {
-  margin-top: 250px; /* або padding-top: 190px */
-  padding: 50px 0;   /* внутрішні відступи: зверху/знизу */
-}
-
-/* Кнопка ТІЛЬКИ в блоці Scout */
-.scout .btn {
-  margin-top: 0;              /* перекриває глобальне .btn */
-  margin-bottom: 150px;       /* ≈ 5 см (1 см ≈ 37.8 px) */
-  padding: 10px 30px;
-  background: #00cc44;
-  border-radius: 8px;
-  color: #000;
-  cursor: pointer;
-  font-size: 20px;
-  font-weight: bold;
-  text-decoration: none;
-}
-
-.scout-content {
-  max-width: 450px;        /* ширина колонки */
-  margin: 0 0 0 300px;   /* 120px зліва */          /* центрування по центру */
-  font-size: 1.1rem;
-  font-weight: normal;
-  text-align: justify;
-  color: #000;
-}
-
-/*.scout{*/
-/*  position: relative;*/
-/*  width: 100%;*/
-/*  padding: 50px ;  !* відступи зверху/знизу + поля по боках *!*/
-/*  !*background: #f5f9fb; можеш задати фон, якщо треба *!*/
-/*  text-align: center;  !* центрування тексту і кнопки *!*/
-/*}*/
-
-/*.scout-btn {*/
-/*  display: inline-block;*/
-/*  padding: 20px 30px;*/
-/*  background: #00cc44;*/
-/*  border-radius: 8px;*/
-/*  color: #000;*/
-/*  cursor: pointer;*/
-/*  font-size: 20px;   !* розмір тексту *!*/
-/*  font-weight: bold; !* жирний *!*/
-/*  text-decoration: none;*/
-/*  !* margin-top: 100px;  відступ вниз від тексту *!*/
-/*  !* margin-top: 0.8em;відступ у висоті рядка *!*/
-/*  margin-top: 50%;  !* замість 100px *!*/
-/*}*/
-
-/*.scout-content{*/
-/*  position: relative;*/
-/*  !*top: 17%;    !* від верхньої межі секції *!*!*/
-/*  margin: 100px 0 0 10%;  !* верхній відступ + зсув ліворуч *!*/
-/*  max-width: 500px;       !* щоб не розпливалось на всю ширину *!*/
-/*   !* right: 21%; від правої межі *!*/
-/*  font-size: 1.1rem;      !* замість vw — щоб текст не з’їжджав *! !* font-size: 1.3vw; масштабований шрифт *!*/
-/*  !* transform: translateY(20%); вирівнює по центру вертикалі *!*/
-/*  !*max-width: 28%;*!*/
-/*  font-weight: normal;*/
-/*  text-align: left;*/
-/*  color: #000;*/
-/*}*/
 
 
-
-
-/* Footer */
-footer {
-   /* background: rgba(0,0,0,0.7); напівпрозорий чорний */
-  color: #fff;
-  padding: 15px 250px;
-  text-align: justify;
-  font-size: 0.7rem;
-  max-width: 65%;
-}
-
-/* Кнопка */
-.btn {
-  display: inline-block;
-  padding: 20px 30px;
-  background: #00cc44;
-  border-radius: 8px;
-  color: #000;
-  cursor: pointer;
-  font-size: 20px;   /* розмір тексту */
-  font-weight: bold; /* жирний */
-  text-decoration: none;
-  margin-top: 100px;         /* відступ вниз від тексту */
-}
-.btn:hover {
-  background: #009933;
-}

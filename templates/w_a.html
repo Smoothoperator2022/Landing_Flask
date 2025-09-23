@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Финансово‑аналитическая модель W.A. AI™</title>
+  <meta name="description" content="Инструменты для анализа данных и стабильных решений. Аналитика, визуализация, прогнозирование и автоматизация на базе W.A. AI™." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg-start:#bdf2c4; /* мягкий мятный */
+      --bg-end:#5ec08d;   /* изумрудный градиент */
+      --text:#0a1a14;
+      --muted:#38594b;
+      --accent:#0d7d4d;
+      --white:#fff;
+      --card:#ffffffee;
+      --shadow:0 10px 25px rgba(10,26,20,.12), 0 2px 6px rgba(10,26,20,.08);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
+      color:var(--text);
+      background:linear-gradient(180deg,var(--bg-start),var(--bg-end));
+      background-attachment:fixed;
+      line-height:1.55;
+    }
+    .container{width:min(1120px,92vw);margin:0 auto}
+    header{
+      padding:28px 0 12px;
+      text-align:center;
+    }
+    h1{margin:0 0 4px;font-weight:800;font-size:clamp(28px,3.5vw,44px)}
+    .subtitle{color:var(--muted);font-weight:600}
+    .lede{max-width:940px;margin:18px auto 36px;color:#1d3028;font-size:15px}
+
+    /* hero */
+    .hero{
+      position:relative;
+      padding:32px 0 24px;
+      overflow:hidden;
+    }
+    .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center}
+    .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+    .kpi{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+    .kpi .mini{padding:14px 16px;border-radius:14px;background:#fff;box-shadow:0 4px 12px rgba(0,0,0,.06)}
+    .kpi h4{margin:0 0 8px;font-size:14px;color:#1b372c}
+    .kpi .val{font-weight:800;font-size:22px}
+
+    .hero-media{position:relative}
+    .hero-media img{width:100%;border-radius:var(--radius);box-shadow:var(--shadow);object-fit:cover}
+
+    /* CTA */
+    .cta-wrap{display:flex;gap:14px;flex-wrap:wrap;margin:18px 0 0}
+    .btn{--bg:var(--accent);--fg:#fff;appearance:none;border:none;cursor:pointer;border-radius:999px;padding:14px 22px;font-weight:700;font-size:16px;color:var(--fg);background:var(--bg);box-shadow:0 8px 18px rgba(13,125,77,.28)}
+    .btn:hover{transform:translateY(-1px)}
+    .btn:active{transform:translateY(0)}
+    .btn.secondary{--bg:#fff;--fg:#0d7d4d;border:2px solid #0d7d4d}
+
+    /* feature rows */
+    .row{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;margin:44px 0}
+    .row.reverse{grid-template-columns:.9fr 1.1fr}
+    .row img{width:100%;border-radius:var(--radius);box-shadow:var(--shadow)}
+
+    .section-title{margin:52px 0 10px;text-align:center;font-size:26px}
+
+    /* analytics strip */
+    .strip{background:#f8fff9;border-radius:22px;padding:22px;box-shadow:var(--shadow)}
+
+    /* grid of bullets */
+    .bullets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:20px 0}
+    .bullets .b{background:#fff;border-radius:16px;padding:16px;box-shadow:0 6px 16px rgba(0,0,0,.06)}
+    .b h5{margin:0 0 8px;font-size:15px}
+
+    /* footer */
+    footer{background:#0b0b0b;color:#ddd;margin-top:52px;padding:28px 0}
+    footer .container{font-size:12px}
+    footer a{color:#89f3ba;text-decoration:none}
+
+    @media (max-width:920px){
+      .hero-grid,.row,.row.reverse{grid-template-columns:1fr}
+      .row.reverse .text{order:2}
+    }
+  </style>
+</head>
+<body>
+  <header class="container">
+    <h1>Финансово‑аналитическая модель W.A. AI™</h1>
+    <div class="subtitle">Инструменты для анализа данных и стабильных решений</div>
+    <p class="lede">Если вы выбрали нас, значит, вы ищете стабильные решения для дохода без постоянного участия. Наша команда сотрудничает с разработчиками финансово‑аналитической модели W.A. AI™, которая обеспечивает прозрачность и стабильность процессов. Вы можете проверить её работу в удобном режиме и оценить результат лично. При необходимости поддержку на каждом этапе готовы оказать консультанты.</p>
+  </header>
+
+  <section class="hero container">
+    <div class="hero-grid">
+      <div class="card">
+        <h3 style="margin:4px 0 14px">W.A. AI™</h3>
+        <div class="kpi" aria-label="ключевые показатели">
+          <div class="mini">
+            <h4>Моделирование данных</h4>
+            <div class="val">25 050</div>
+            <div class="meta" style="color:#1a7c49;font-size:12px">Доход 1 400 • Расход 40.00</div>
+          </div>
+          <div class="mini">
+            <h4>Сценарная визуализация</h4>
+            <div class="val">21 054</div>
+            <div class="meta" style="color:#1a7c49;font-size:12px">Метод оплаты • +12%</div>
+          </div>
+          <div class="mini">
+            <h4>Гипотетическая модель</h4>
+            <div class="val">120 дней</div>
+            <div class="meta" style="color:#1a7c49;font-size:12px">5 пользователей • Поддержка</div>
+          </div>
+          <div class="mini">
+            <h4>Аналитический вывод</h4>
+            <div class="val">25 050</div>
+            <div class="meta" style="color:#1a7c49;font-size:12px">Доход 1 400.24 • Расход 40.00</div>
+          </div>
+        </div>
+        <div class="cta-wrap">
+          <!-- КНОПКА: поменяйте href на нужную ссылку -->
+          <a class="btn" href="#contact">Попробовать W.A. AI</a>
+          <a class="btn secondary" href="#scout">Узнать про Scout™</a>
+        </div>
+      </div>
+      <div class="hero-media">
+        <img alt="AI в корпоративной аналитике" src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?q=80&w=1600&auto=format&fit=crop" />
+      </div>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="row">
+      <div class="text">
+        <h3 style="margin:0 0 10px">Инструмент интеллектуальной автоматизации действий с данными</h3>
+        <p>Анализ. Визуализация. Прогнозирование — на базе W.A. AI™. Интегрировано в корпоративные процессы более 1500 команд.</p>
+        <div class="bullets">
+          <div class="b"><h5>АИ для максимизации данных</h5><p>Многоуровневые пайплайны, правила и сценарии.</p></div>
+          <div class="b"><h5>Прозрачность</h5><p>Логи и верификация результатов в реальном времени.</p></div>
+          <div class="b"><h5>Масштабируемость</h5><p>Горизонтальное масштабирование и отказоустойчивость.</p></div>
+        </div>
+      </div>
+      <img alt="Корпоративная аналитика" src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=1600&auto=format&fit=crop" />
+    </div>
+
+    <div class="row reverse">
+      <img alt="Рост показателей" src="https://images.unsplash.com/photo-1532074205216-d0e1f4b87368?q=80&w=1600&auto=format&fit=crop" />
+      <div class="text">
+        <h3 style="margin:0 0 10px">Проверенные решения для стабильности</h3>
+        <p>Наша платформа используется в цифровых процессах более 1500 команд. Это подтверждает её надежность и технологическую устойчивость. Использование проверенных решений способствует стабильности и масштабируемости платформы.</p>
+      </div>
+    </div>
+
+    <h3 id="scout" class="section-title">Система Scout™ для анализа сценариев</h3>
+    <div class="strip">
+      <p>Вы можете в режиме реального времени отслеживать ключевые процессы и данные с помощью системы <strong>Scout™</strong>, которая обеспечивает высокую точность, надежность и прозрачность каждого этапа.</p>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div class="container">
+      <p><strong>W.A. AI™</strong><br>
+      Company Name: Voss Digital Solutions, Managing Director: Daniel Voss. Address: Musterstrasse 12, 10115 Berlin, Germany.<br>
+      Contact/Phone: +49 (0)30 1234567, e‑mail: info@vistaquant.net.</p>
+      <p>Responsible for content (according to § 55 Abs. 2 RStV): Daniel Voss, address as above.</p>
+      <p>Информация на этой странице носит демонстрационный характер и не является финансовой консультацией.</p>
+    </div>
+  </footer>
+</body>
+</html>
