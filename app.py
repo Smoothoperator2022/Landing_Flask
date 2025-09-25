@@ -139,9 +139,7 @@ translations = {
         "form_email": "Email",
         "form_submit": "Отправить",
         "form_success": "Спасибо за регистрацию! Наш сотрудник свяжется с Вами в течении часа!" 
-        """После регистрации в течении часа с Вами свяжется наш персональный консультант, чтобы помочь активировать ваш аккаунт и объяснить, как максимально быстро выйти на прибыль.
-                            Вам останется только следовать простым шагам и наблюдать, как ваш доход растёт день за днём.
-                            ⚡️ Чем быстрее вы начнёте — тем раньше получите первые выплаты!"""
+
     },
     "en": {
         "title": "W.A. AI™ Financial Analysis Model",
@@ -210,9 +208,7 @@ translations = {
         "form_email": "Email",
         "form_submit": "Send",
         "form_success": "Thank you for registering! One of our staff members will contact you within an hour!"
-            """After registering, our personal consultant will contact you within an hour to help you activate your account and explain how to start making a profit as quickly as possible.
-                           All you have to do is follow a few simple steps and watch your income grow day by day.
-                            ⚡️ The sooner you start, the sooner you will receive your first payments!"""
+
     }
 }
 

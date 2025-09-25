@@ -6,12 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7c65b1bc-b48b-44a2-90a1-e6c05c2e9de7" name="Changes" comment="Shaping with coding_NOT PDF_BACKGROUND">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app – копія.py" beforeDir="false" afterPath="$PROJECT_DIR$/app – копія.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/img/people_grapic.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/form.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,7 +92,7 @@
       <workItem from="1758552240619" duration="5982000" />
       <workItem from="1758634426898" duration="11423000" />
       <workItem from="1758727708802" duration="2612000" />
-      <workItem from="1758813358280" duration="1580000" />
+      <workItem from="1758813358280" duration="1851000" />
     </task>
     <task id="LOCAL-00001" summary="before en_ru trans">
       <option name="closed" value="true" />
