@@ -4,6 +4,40 @@ body {
   background: linear-gradient(to bottom right, #8be28f, #3bc088);
   color: #000;
 }
+/* другий фон */
+.alt-bg {
+  background: url("/static/img/Layer2.jpg") no-repeat center;
+  background-size: cover;     /* щоб картинка заповнювала блок */
+  padding: 80px 0;            /* відступи зверху і знизу */
+  color: #000;                /* чорний текст */
+
+  max-width: 1200px;    /* обмежуємо як у тексту */
+  margin: 0 auto;       /* центруємо */
+  border-radius: 12px;  /* можна додати, щоб було акуратніше */
+}
+
+.alt-bg .container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.btn {
+  display: inline-block;   /* щоб кнопка займала лише потрібну ширину */
+  background: #0d7d4d;
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 22px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 12px 18px rgba(13,125,77,.28);
+  text-decoration: none;
+  text-align: center;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
 
 .container {
   width: 90%;        /* завжди 90% від ширини екрану */
@@ -182,9 +216,12 @@ h2 {
   margin-bottom: 40px;
   line-height: 1.6;
   text-align: justify; /* вирівняти края тексту */
-  top: -30px;   /* регулюй відступ зверху */
-  right: -20px; /* регулюй відступ праворуч */
-  width: 1200px; /* регулюй розмір */
+     /* top: -30px; регулюй відступ зверху */
+   /* right: -20px; регулюй відступ праворуч */
+   /* width: 1200px; регулюй розмір */
+  max-width: 100%;    /* займає всю ширину контейнера */
+  margin-left: 0;     /* прибрати правий зсув */
+  margin-right: 0;
 }
 
 .chart-row {
@@ -407,7 +444,7 @@ h2 {
 /* Імпресум */
 .footer {
   background: #000;
-  width: 100%;        /* завжди 90% від ширини екрану */
+         /* width: 100%;  завжди 90% від ширини екрану */
   max-width: 1200px; /* але не більше ніж 1200px */
   color: #fff;
   font-size: 12px;
@@ -462,3 +499,53 @@ h2 {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.form-box {
+  background: #f0f0f0;   /* світло-сірий фон */
+  color: #000;           /* чорний текст */
+  border: 1px solid #ccc; /* тонка сіра рамка, як у Windows */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* легка тінь */
+  /*border: 2px solid #d0d0d0;*/
+  /*box-shadow: inset 2px 2px #fff, inset -2px -2px #888;*/
+  border-radius: 16px;     /* легке округлення */
+  padding: 30px;
+  max-width: 420px;
+  margin: 30px auto;
+  text-align: center;
+  position: relative;
+}
+
+.form-box input {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.form-box button {
+  padding: 10px 20px;
+  background: #00cc44;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.form-box button:hover { background: #009933; }

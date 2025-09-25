@@ -4,7 +4,6 @@ import smtplib, os
 from email.mime.text import MIMEText
 from dotenv import load_dotenv
 
-
 # завантажуємо змінні з .env
 load_dotenv()
 

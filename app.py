@@ -1,14 +1,82 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for, session
+import smtplib, os
+from email.mime.text import MIMEText
+from dotenv import load_dotenv
 
+# завантажуємо змінні з .env
+load_dotenv()
+# load_dotenv(".env.local")  # або ".env.prod"
+# PS C:\Users\User> python -m aiosmtpd -n -l localhost:1025
+"""python -m aiosmtpd → запускає модуль aiosmtpd як програму.
+-n → "no daemon", тобто працюй у цьому ж вікні, не від'єднуйся у фон.
+-l localhost:1025 → слухати порт 1025 тільки на localhost."""
 app = Flask(__name__)
+app.secret_key = "supersecretkey"  # щоб працювала session
+
+SMTP_HOST = os.getenv("MAIL_SERVER", "smtp.hostinger.com")
+SMTP_PORT = int(os.getenv("MAIL_PORT", 465))
+SMTP_USER = os.getenv("MAIL_USER", "info@vistaquant.net")
+SMTP_PASS = os.getenv("MAIL_PASS", "secret")
+RECIPIENTS = [addr.strip() for addr in os.getenv("RECIPIENTS", SMTP_USER).split(",")]
+
+# -------------------------------
+# функція відправки листа
+# -------------------------------
+def send_email(name, phone, email):
+    msg = MIMEText(f"Имя: {name}\nТелефон: {phone}\nEmail: {email}")
+    msg["Subject"] = "Новая заявка с лендинга"
+    msg["From"] = SMTP_USER
+    msg["To"] = ", ".join(RECIPIENTS)
+
+    if SMTP_PORT == 1025 and SMTP_HOST == "localhost":  # тестовий SMTP
+        with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as server:
+            server.sendmail(SMTP_USER, RECIPIENTS, msg.as_string())
+            print("✅ Тестовий лист відправлено")
+    else:  # реальний SMTP
+        with smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT) as server:
+            server.login(SMTP_USER, SMTP_PASS)
+            server.sendmail(SMTP_USER, RECIPIENTS, msg.as_string())
+            print("✅ Реальний лист відправлено")
+
+    print("SMTP_HOST:", SMTP_HOST)
+    print("SMTP_PORT:", SMTP_PORT, type(SMTP_PORT))
+
+# -------------------------------
+# маршрут другої сторінки
+# -------------------------------
+@app.route("/form", methods=["GET", "POST"])
+def form():
+    lang = request.args.get("lang", "ru")
+    t = translations.get(lang, translations["ru"])
+
+    if request.method == "POST":
+        name = request.form["name"]
+        phone = request.form["phone"]
+        email = request.form["email"]
+
+        send_email(name, phone, email)
+        session["submitted"] = True
+        return redirect(url_for("form", lang=lang))
+
+    submitted = session.get("submitted", False)
+    return render_template("form.html", submitted=submitted, lang=lang, t=t)
+
+
+@app.route("/form/reset")
+def form_reset():
+    session.pop("submitted", None)
+    lang = request.args.get("lang", "ru")
+    return redirect(url_for("form", lang=lang))
 
 # --- Переклади ---
 translations = {
     "ru": {
         "title": "Финансово-аналитическая модель W.A. AI™",
-        "title_form":"Встречайте W.A. AI™",
+        "title_form":"Зарабатывайте вместе с W.A. AI™ — реальные деньги каждый месяц!",
         "subtitle": "Инструменты для анализа данных и стабильных решений",
-        "subtitle_form":"Зарабатывайте от 10 000€ в месяц при минимальном вкладе в 250€ ,благодаря доступу к нашей платформ!",
+        "subtitle_form":"""Система W.A. AI™ создана для того, чтобы приносить доход без лишних усилий.
+         Вам не нужно тратить время на анализ или разбираться в графиках — всё это за вас делает искусственный интеллект.
+                В зависимости от вложений, ваши результаты могут достигать до 10 000 € в месяц, а первые прибыли вы увидите уже в течение первой недели.""",
         "text1": """Вы брали нас, а значит Вы ищете стабильные решения для дохода без постоянного участия.
          Финансово-аналитическая модель W.A. AI™ объединяет в себе инструменты для глубокого анализа данных и выработки решений,
           которые можно применять в долгосрочной перспективе.
@@ -61,18 +129,27 @@ translations = {
         "button1": "Запустить демонстрацию",
         "button2": "Узнать подробности",
         "button3": "Проверить работу модели",
-        "form_title": "Пожалуйста, введите Ваши данные, чтобы получить доступ к демонстрации",
+        "form_title": """После регистрации в течении часа с Вами свяжется наш персональный консультант,
+         чтобы помочь активировать ваш аккаунт и объяснить, как максимально быстро выйти на прибыль.
+                            Вам останется только следовать простым шагам и наблюдать, как ваш доход растёт день за днём.
+                            ⚡️ Чем быстрее вы начнёте — тем раньше получите первые выплаты!
+                            Пожалуйста, введите Ваши данные, чтобы получить доступ к демонстрации""",
         "form_name": "Имя",
         "form_phone": "Телефон",
         "form_email": "Email",
         "form_submit": "Отправить",
-        "form_success": "Спасибо, Ваши данные не передаются третьим лицам, наши сотрудники свяжутся с Вами в ближайшее время"
+        "form_success": "Спасибо за регистрацию! Наш сотрудник свяжется с Вами в течении часа!" 
+        """После регистрации в течении часа с Вами свяжется наш персональный консультант, чтобы помочь активировать ваш аккаунт и объяснить, как максимально быстро выйти на прибыль.
+                            Вам останется только следовать простым шагам и наблюдать, как ваш доход растёт день за днём.
+                            ⚡️ Чем быстрее вы начнёте — тем раньше получите первые выплаты!"""
     },
     "en": {
         "title": "W.A. AI™ Financial Analysis Model",
-        "title_form": "Meet W.A. AI™",
+        "title_form": "Earn real money every month with W.A. AI™!",
         "subtitle": "Tools for data analysis and stable solutions",
-        "subtitle_form": "Earn from €10,000 per month with a minimum deposit of €250 by accessing our platform!",
+        "subtitle_form": """The W.A. AI™ system is designed to generate income without any extra effort.
+                         You don't need to spend time analyzing or figuring out charts — artificial intelligence does it all for you.
+                        Depending on your investment, your results can reach up to €10,000 per month, and you will see your first profits within the first week.""",
         "text1": """You chose us, which means you are looking for stable income solutions without constant involvement.
          The W.A. AI™ financial analysis model combines tools for in-depth data analysis and decision-making that can be applied in the long term.
         We emphasize transparency in our processes so that you can independently verify the results and ensure their sustainability.
@@ -123,12 +200,19 @@ translations = {
         "button1": "Start Demo",
         "button2": "Learn More",
         "button3": "Check the Model",
-        "form_title": "Please, enter your data to get access to the demo",
+        "form_title": """After registering, our personal consultant will contact you within an hour to help
+         you activate your account and explain how to start making a profit as quickly as possible.
+                           All you have to do is follow a few simple steps and watch your income grow day by day.
+                            ⚡️ The sooner you start, the sooner you will receive your first payments!
+                            Please, enter your data to get access to the demo""",
         "form_name": "Name",
         "form_phone": "Phone",
         "form_email": "Email",
         "form_submit": "Send",
-        "form_success": "Thank you! Your data is not shared with third parties. Our team will contact you shortly."
+        "form_success": "Thank you for registering! One of our staff members will contact you within an hour!"
+            """After registering, our personal consultant will contact you within an hour to help you activate your account and explain how to start making a profit as quickly as possible.
+                           All you have to do is follow a few simple steps and watch your income grow day by day.
+                            ⚡️ The sooner you start, the sooner you will receive your first payments!"""
     }
 }
 
