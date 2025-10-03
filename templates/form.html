@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ lang }}">
 <head>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/leaf.jpg') }}">
   <meta charset="UTF-8">
   <title>{{ t["title"] }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
@@ -39,6 +40,11 @@
   {% else %}
     <div class="form-box">
       <h3>{{ t["form_success"] }}</h3>
+      {% if retry_allowed %}
+        <p style="margin-top:10px; font-size:14px; color:#444;">
+          <a href="{{ url_for('form_reset', lang=lang) }}">{{ t["form_chance"] }}</a>.
+        </p>
+      {% endif %}
     </div>
   {% endif %}
   </div>
@@ -88,14 +94,14 @@
                   <div class="val">25,050</div>
                   <div class="meta-row">
                     <div class="meta-box">
-                      <div class="meta-label">Income</div>
-                      <div class="meta-value">1,400.24</div>
-                      <div class="meta-change plus">+12%</div>
+                      <div class="meta-label">{{ t["card4_meta_1"] }}</div>
+<!--                      <div class="meta-value">1,400.24</div>-->
+<!--                      <div class="meta-change plus">+12%</div>-->
                     </div>
                     <div class="meta-box">
-                      <div class="meta-label">Expenses</div>
-                      <div class="meta-value">40.00</div>
-                      <div class="meta-change minus">+9%</div>
+                      <div class="meta-label">{{ t["card4_meta_2"] }}</div>
+<!--                      <div class="meta-value">40.00</div>-->
+<!--                      <div class="meta-change minus">+9%</div>-->
                     </div>
                   </div>
                 </div>

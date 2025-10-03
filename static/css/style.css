@@ -114,7 +114,7 @@ h1 {
 
 h2 {
   text-align: center;
-  font-size: 22px;
+  font-size: 18px;
   font-weight: normal;
   margin-bottom: 30px;  /* більше простору під субтитул */
   line-height: 1.5;
@@ -122,11 +122,20 @@ h2 {
 
 .section {
   margin-bottom: 40px;  /* більше повітря між секціями */
+  text-align: justify;
 }
 
 .section h3 {
-  font-size: 20px;
+  font-size: 18px;
   margin-bottom: 10px;
+}
+
+
+@media (max-width: 600px) {
+  h1 { font-size: 28px; }
+  h2 { font-size: 16px; }
+  .scout-text { font-size: 18px; }
+  .cards {grid-template-columns: 1fr;}
 }
 
 @media (max-width: 900px) {
@@ -135,11 +144,6 @@ h2 {
   }
 }
 
-@media (max-width: 600px) {
-  .cards {
-    grid-template-columns: 1fr;
-  }
-}
 
 
 /* AI photo */
@@ -161,12 +165,14 @@ h2 {
 
 /* Текстова частина */
 .row .text {
-  font-size: 18px;
-  line-height: 1.3;
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 200;   /* normal 400 - нормальна товщина */
   text-align: justify;
   display: flex;
   flex-direction: column;  /* дозволяє кнопку поставити вниз */
   justify-content: space-between;
+  margin: -10px 0;       /* відступи зверху і знизу */
 }
 
 /* Кнопка під текстом */
@@ -182,6 +188,28 @@ h2 {
   font-size: 20px;      /* збільшений шрифт */
   border-radius: 999px;
   box-shadow: 0 12px 20px rgba(13,125,77,.3);
+}
+
+
+/* Адаптив для блоку з AI фото і текстом */
+@media (max-width: 768px) {
+  .row {
+    grid-template-columns: 1fr;  /* один стовпець замість двох */
+    text-align: center;          /* центруємо вміст */
+  }
+
+  .row img {
+    max-width: 80%;              /* обмежуємо ширину картинки */
+    margin: 0 auto;              /* центруємо картинку */
+  }
+
+  .row .text {
+    text-align: center;          /* текст по центру */
+    font-size: 15px;             /* трохи зменшений шрифт */
+    margin-top: 15px;            /* відступ від картинки */
+    max-width: 90%;
+    line-height: 1.5;
+  }
 }
 
 /*.row .text h3 {*/
@@ -212,7 +240,7 @@ h2 {
 }
 
 .charts h3 {
-  font-size: 22px;
+  font-size: 16px;
   margin-bottom: 40px;
   line-height: 1.6;
   text-align: justify; /* вирівняти края тексту */
@@ -303,7 +331,7 @@ h2 {
 .scout-left {
   /*position: relative;*/
   /*min-height: 420px;                  !* щоб було місце і для кнопки зверху, і для тексту знизу *!*/
-  font-size: 22px;
+  font-size: 16px;
   line-height: 1.6;
   text-align: justify;
 }
@@ -342,7 +370,7 @@ h2 {
   width: 320px; /* регулюй під макет */
   text-align: center;
   box-shadow: 0 8px 20px rgba(0,0,0,.12);
-  margin: 20px 0; /* відступи від інших блоків */
+  margin: 10px 0; /* відступи від інших блоків */
 }
 
 .anal-card h4 {
@@ -404,8 +432,9 @@ h2 {
   /*position: absolute;*/
   left: 0;
   bottom: 0;
-  font-size: 22px;
+  font-size: 17px;
   max-width: 600px;
+  font-weight: 200;   /* normal 400 - нормальна товщина */
   text-align: left;
   line-height: 1.6;
 }
@@ -431,6 +460,8 @@ h2 {
   .scout-text {
     position: static;                 /* без absolute на мобілках */
     margin-top: 18px;
+    padding: 0 12px;   /* бокові відступи, щоб текст не злипався */
+    text-align: left;  /* краще читабельність на мобілці */
   }
   .pinned-btn {
     position: static;                 /* кнопка стає звичайною у потоці */

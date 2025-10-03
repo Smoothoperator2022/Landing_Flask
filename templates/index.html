@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="{{ lang }}">
 <head>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/leaf.jpg') }}">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ t["title"] }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
+
+
 <body>
   <!-- Перемикач мов -->
   <div class="lang-switch">
@@ -26,16 +29,9 @@
 
     <!-- Кнопка -->
     <div class="cta-wrap" style="text-align:center; margin-top:20px;">
-      <div id="hidden-btn" class="btn" data-target="/form?lang={{ lang }}">
+      <div id="btn_1" class="btn" data-target="/form?lang={{ lang }}">
         {{ t["button1"] }}
       </div>
-
-      <script>
-        document.getElementById("hidden-btn").addEventListener("click", function(e) {
-          e.preventDefault();
-          window.location.href = this.dataset.target;
-        });
-      </script>
     </div>
   </div>
 
@@ -90,17 +86,9 @@
   <div class="btn-wrapper">
     <!-- Кнопка -->
     <div class="cta-wrap" style="text-align:center; margin-top:20px;">
-      <div id="hidden-btn" class="btn" data-target="/form?lang={{ lang }}">
+      <div id="btn_2" class="btn" data-target="/form?lang={{ lang }}">
         {{ t["button2"] }}
       </div>
-
-
-      <script>
-        document.getElementById("hidden-btn").addEventListener("click", function(e) {
-          e.preventDefault();
-          window.location.href = this.dataset.target;
-        });
-      </script>
     </div>
   </div>
 
@@ -140,30 +128,21 @@
                   <div class="val">25,050</div>
                   <div class="meta-row">
                     <div class="meta-box">
-                      <div class="meta-label">Income</div>
-                      <div class="meta-value">1,400.24</div>
-                      <div class="meta-change plus">+12%</div>
+                      <div class="meta-label">{{ t["card4_meta_1"] }}</div>
+<!--                      <div class="meta-value">1,400.24</div>-->
+<!--                      <div class="meta-change plus">+12%</div>-->
                     </div>
                     <div class="meta-box">
-                      <div class="meta-label">Expenses</div>
-                      <div class="meta-value">40.00</div>
-                      <div class="meta-change minus">+9%</div>
+                      <div class="meta-label">{{ t["card4_meta_2"] }}</div>
+<!--                      <div class="meta-value">40.00</div>-->
+<!--                      <div class="meta-change minus">+9%</div>-->
                     </div>
                   </div>
                 </div>
 
-                <div id="hidden-btn" class="btn" data-target="/form?lang={{ lang }}">
+                <div id="btn_3" class="btn" data-target="/form?lang={{ lang }}">
                   {{ t["button3"] }}
                 </div>
-
-                <script>
-                  document.getElementById("hidden-btn").addEventListener("click", function(e) {
-                    e.preventDefault();
-                    window.location.href = this.dataset.target;
-                  });
-                </script>
-
-
               </div>
           </div>
 
@@ -187,5 +166,14 @@
       </div>
     </div>
   </section>
+
+  <script>
+    ["btn_1","btn_2","btn_3"].forEach(id => {
+      document.getElementById(id).addEventListener("click", function(e) {
+        e.preventDefault();
+        window.location.href = this.dataset.target;
+      });
+    });
+  </script>
 </body>
 </html>
