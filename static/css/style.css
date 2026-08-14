@@ -114,8 +114,8 @@ h1 {
 
 h2 {
   text-align: center;
-  font-size: 18px;
-  font-weight: normal;
+  font-size: 28px;
+  font-weight: bold;
   margin-bottom: 30px;  /* більше простору під субтитул */
   line-height: 1.5;
 }
@@ -123,6 +123,8 @@ h2 {
 .section {
   margin-bottom: 40px;  /* більше повітря між секціями */
   text-align: justify;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .section h3 {
@@ -152,7 +154,7 @@ h2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
-  align-items: start;   /* вирівняти по верхньому краю */
+  align-items: start;   /* ось так */
   margin: 20px auto;
   max-width: 1200px;
 }
@@ -165,6 +167,7 @@ h2 {
 
 /* Текстова частина */
 .row .text {
+  align-self: start;   /* примусово вирівняти сам блок */
   font-size: 16px;
   line-height: 1.5;
   font-weight: 200;   /* normal 400 - нормальна товщина */
@@ -172,7 +175,8 @@ h2 {
   display: flex;
   flex-direction: column;  /* дозволяє кнопку поставити вниз */
   justify-content: space-between;
-  margin: -10px 0;       /* відступи зверху і знизу */
+  margin: -20px 20px;   /*  зліва і справа */
+   /*padding-top: -20px; відступ зверху */
 }
 
 /* Кнопка під текстом */
@@ -434,7 +438,7 @@ h2 {
   bottom: 0;
   font-size: 17px;
   max-width: 600px;
-  font-weight: 200;   /* normal 400 - нормальна товщина */
+  font-weight: bold;   /* normal 400 - нормальна товщина */
   text-align: left;
   line-height: 1.6;
 }
@@ -580,3 +584,57 @@ h2 {
   font-size: 16px;
 }
 .form-box button:hover { background: #009933; }
+
+
+/*.phone-inputs {*/
+/*  display: flex;*/
+/*  gap: 10px;*/
+/*  align-items: center;*/
+/*}*/
+/*#phone_country { flex: 0 0 190px; } !* ширина селекта *!*/
+/*#phone_number  { flex: 1 1 auto; }   !* тягнеться на решту *!*/
+/*@media (max-width: 520px) {*/
+/*  .phone-inputs { flex-direction: column; align-items: stretch; }*/
+/*  #phone_country, #phone_number { width: 100%; }*/
+/*}*/
+
+/* ====== Phone field styling (intl-tel-input) ====== */
+.iti {
+  width: 250px;               /* ← Зменшення ширини (можеш підібрати 220–300) */
+  margin: 0 auto;             /* центрує поле */
+  display: flex;
+  justify-content: center;
+}
+
+.iti__flag-container {
+  background: #222;            /* фон під прапором у темній темі */
+  border: 1px solid #444;      /* тонка рамка */
+  border-right: none;
+  border-radius: 6px 0 0 6px;
+}
+
+.iti__selected-flag {
+  background-color: transparent !important;
+}
+
+input[type="tel"] {
+  width: 100%;
+  background-color: #fff;       /* білий фон */
+  color: #000;                  /* чорний текст */
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 15px;
+}
+
+input[type="tel"]:focus {
+  outline: none;
+  border-color: #00ff66;       /* зелена рамка при фокусі */
+}
+
+/* адаптивність */
+@media (max-width: 520px) {
+  .iti {
+    width: 100%;
+  }
+}

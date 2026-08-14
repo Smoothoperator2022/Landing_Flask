@@ -15,8 +15,10 @@ venv/
 .vscode/
 .idea/
 
-# Environment
+# Secrets / environment
 .env
+*.pem
+*.key
 
 # test files
 mail_test.py

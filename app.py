@@ -48,32 +48,48 @@ def send_email(name, phone, email):
 
 # -------------------------------
 # маршрут другої сторінки
+
+ALLOWED_CODES = {
+    '+49', '+420', '+39', '+33', '+44', '+34', '+371', '+370',
+    '+353', '+31', '+32', '+351', '+358', '+372', '+46', '+47',
+    '+43', '+421', '+41', '+45', '+36', '+354', '+385', '+48'
+}
 # -------------------------------
 @app.route("/form", methods=["GET", "POST"])
 def form():
     lang = request.args.get("lang", "ru")
     t = translations.get(lang, translations["ru"])
 
+    # selected_code = "+49"  # дефолт, за потреби поміняй
     if request.method == "POST":
         name = request.form["name"]
-        phone = request.form["phone"]
+        phone = request.form.get("phone", "").strip().replace(" ", "")
         email = request.form["email"]
 
+        # selected_code = country_code  # щоб повернути у селект
+
+        if not any(phone.startswith(code) for code in ALLOWED_CODES):
+            return "❌ Unsupported country code", 400
+
+        # full_phone = country_code + phone_number.strip().replace(' ', '')
         send_email(name, phone, email)
-        # якщо вдруге — блокувати reset
+
+        # якщо вдруге — блокувати reset, логіка повторного сабміту
         if session.get("retry_used", False):
             session["submitted"] = True
             session["retry_allowed"] = False
         else:
             session["submitted"] = True
             session["retry_allowed"] = True
+
         return redirect(url_for("form", lang=lang))
 
     # тут гарантовано є обидві змінні
     submitted = session.get("submitted", False)
     retry_allowed = session.get("retry_allowed", False)
 
-    return render_template("form.html", submitted=submitted, retry_allowed=retry_allowed, lang=lang, t=t)
+    return render_template("form.html", submitted=submitted,
+                           retry_allowed=retry_allowed, lang=lang, t=t) #, selected_code=selected_code)
 
 
 @app.route("/form/reset")
@@ -155,7 +171,8 @@ translations = {
                             ⚡️ Чем быстрее вы начнёте — тем раньше получите первые выплаты!
                             Пожалуйста, введите Ваши данные, чтобы получить доступ к демонстрации""",
         "form_name": "Имя",
-        "form_phone": "Телефон",
+        "form_country": "Код страны",
+        "form_phone_number": "Телефон (без кода)",
         "form_email": "Email",
         "form_submit": "Отправить",
         "form_success": "Спасибо за регистрацию! Наш сотрудник свяжется с Вами в течении часа!",
@@ -228,7 +245,8 @@ translations = {
                             ⚡️ The sooner you start, the sooner you will receive your first payments!
                             Please, enter your data to get access to the demo""",
         "form_name": "Name",
-        "form_phone": "Phone",
+        "form_country": "Country code",
+        "form_phone_number": "Phone number",
         "form_email": "Email",
         "form_submit": "Send",
         "form_success": "Thank you for registering! One of our staff members will contact you within an hour!",

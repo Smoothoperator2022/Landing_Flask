@@ -5,6 +5,9 @@
   <meta charset="UTF-8">
   <title>{{ t["title"] }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+
 </head>
 <body>
   <!-- Хедер -->
@@ -32,7 +35,48 @@
       <h3>{{ t["form_title"] }}</h3>
       <form method="post">
         <input type="text"   name="name"  placeholder="{{ t['form_name'] }}"  required><br>
-        <input type="text"   name="phone" placeholder="{{ t['form_phone'] }}" required><br>
+<!--        <input type="text"   name="phone" placeholder="{{ t['form_phone'] }}" required><br>-->
+
+           <!-- --- поле країни і телефону --- -->
+<!--        <label for="phone_country">{{ t.get("form_country", "Country code") }}</label>-->
+        <div class="phone-inputs">
+          <label for="phone">📞 {{ t.get("form_phone", "Phone number") }}</label>
+          <input id="phone" name="phone" type="tel" required>
+
+<!--          <select id="phone_country" name="phone_country" required>-->
+<!--            <option value="+49"  {% if selected_code=="+49"  %}selected{% endif %}>🇩🇪 Germany (+49)</option>-->
+<!--            <option value="+420" {% if selected_code=="+420" %}selected{% endif %}>🇨🇿 Czech Republic (+420)</option>-->
+<!--            <option value="+39"  {% if selected_code=="+39"  %}selected{% endif %}>🇮🇹 Italy (+39)</option>-->
+<!--            <option value="+33"  {% if selected_code=="+33"  %}selected{% endif %}>🇫🇷 France (+33)</option>-->
+<!--            <option value="+44"  {% if selected_code=="+44"  %}selected{% endif %}>🇬🇧 United Kingdom (+44)</option>-->
+<!--            <option value="+34"  {% if selected_code=="+34"  %}selected{% endif %}>🇪🇸 Spain (+34)</option>-->
+<!--            <option value="+371" {% if selected_code=="+371" %}selected{% endif %}>🇱🇻 Latvia (+371)</option>-->
+<!--            <option value="+370" {% if selected_code=="+370" %}selected{% endif %}>🇱🇹 Lithuania (+370)</option>-->
+<!--            <option value="+353" {% if selected_code=="+353" %}selected{% endif %}>🇮🇪 Ireland (+353)</option>-->
+<!--            <option value="+31"  {% if selected_code=="+31"  %}selected{% endif %}>🇳🇱 Netherlands (+31)</option>-->
+<!--            <option value="+32"  {% if selected_code=="+32"  %}selected{% endif %}>🇧🇪 Belgium (+32)</option>-->
+<!--            <option value="+351" {% if selected_code=="+351" %}selected{% endif %}>🇵🇹 Portugal (+351)</option>-->
+<!--            <option value="+358" {% if selected_code=="+358" %}selected{% endif %}>🇫🇮 Finland (+358)</option>-->
+<!--            <option value="+372" {% if selected_code=="+372" %}selected{% endif %}>🇪🇪 Estonia (+372)</option>-->
+<!--            <option value="+46"  {% if selected_code=="+46"  %}selected{% endif %}>🇸🇪 Sweden (+46)</option>-->
+<!--            <option value="+47"  {% if selected_code=="+47"  %}selected{% endif %}>🇳🇴 Norway (+47)</option>-->
+<!--            <option value="+43"  {% if selected_code=="+43"  %}selected{% endif %}>🇦🇹 Austria (+43)</option>-->
+<!--            <option value="+421" {% if selected_code=="+421" %}selected{% endif %}>🇸🇰 Slovakia (+421)</option>-->
+<!--            <option value="+41"  {% if selected_code=="+41"  %}selected{% endif %}>🇨🇭 Switzerland (+41)</option>-->
+<!--            <option value="+45"  {% if selected_code=="+45"  %}selected{% endif %}>🇩🇰 Denmark (+45)</option>-->
+<!--            <option value="+36"  {% if selected_code=="+36"  %}selected{% endif %}>🇭🇺 Hungary (+36)</option>-->
+<!--            <option value="+354" {% if selected_code=="+354" %}selected{% endif %}>🇮🇸 Iceland (+354)</option>-->
+<!--            <option value="+385" {% if selected_code=="+385" %}selected{% endif %}>🇭🇷 Croatia (+385)</option>-->
+<!--            <option value="+48"  {% if selected_code=="+48"  %}selected{% endif %}>🇵🇱 Poland (+48)</option>-->
+<!--          </select>-->
+
+<!--          <input id="phone_number" name="phone_number" type="tel"-->
+<!--                 inputmode="tel"-->
+<!--                 pattern="[0-9\s\-\(\)]{6,20}"-->
+<!--                 placeholder="{{ t.get('form_phone_number','Phone number') }}"-->
+<!--                 required>-->
+        </div>
+
         <input type="email"  name="email" placeholder="{{ t['form_email'] }}" required><br>
         <button type="submit">{{ t["form_submit"] }}</button>
       </form>
@@ -120,6 +164,31 @@
       </div>
     </div>
   </section>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Список дозволених країн (тільки ЄС)
+    const allowed = [
+      "de","cz","it","fr","gb","es","lv","lt","ie","nl","be",
+      "pt","fi","ee","se","no","at","sk","ch","dk","hu","is","hr","pl"
+    ];
+
+    const input = document.querySelector("#phone");
+    const iti = window.intlTelInput(input, {
+      preferredCountries: ["de", "gb", "pl"], // показати зверху
+      onlyCountries: allowed,                 // дозволені країни
+      nationalMode: false,                    // показувати +код
+      formatOnDisplay: true,
+      separateDialCode: true,                 // прапор + код окремо
+    });
+
+    // Перед відправкою форми записати повний номер у поле
+    const form = input.closest("form");
+    form.addEventListener("submit", function() {
+      const fullNumber = iti.getNumber(); // Наприклад: +4915123456789
+      input.value = fullNumber;           // замінюємо значення
+    });
+  });
+  </script>
 </body>
 </html>
 
